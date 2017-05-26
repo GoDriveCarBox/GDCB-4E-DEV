@@ -124,7 +124,9 @@ class GDCBExplorer:
 
 if __name__ =="__main__":
   
-  explorer = GDCBExplorer()
-  df = pd.read_csv("mode01_codes.csv", encoding = "ISO-8859-1")
+  RUN_UPLOAD = True
   
-  explorer.sql_eng.OverwriteTable(df,"codes_v1")
+  explorer = GDCBExplorer()
+  if RUN_UPLOAD:
+    df = pd.read_csv("../data/mode01_codes.csv", encoding = "ISO-8859-1")  
+    explorer.sql_eng.OverwriteTable(df,"codes_v1")
