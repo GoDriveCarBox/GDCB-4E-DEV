@@ -20,6 +20,7 @@ __created__    = "2017-01-25"
 __modified__   = "2017-05-25"
 __lib__        = "GDCBDE"
 
+import matplotlib.pyplot as plt
 
 from gdcb_azure_helper import MSSQLHelper
 import pandas as pd
@@ -27,6 +28,18 @@ from datetime import datetime as dt
 import numpy as np
 import os
 import json
+
+import time as tm
+
+
+def clean_nonascii_df(df):
+  for col in df.columns:
+    if df[col].dtype=='O':
+      df[col] = df[col].astype(str)
+      df[col] = df[col].apply(
+        lambda x: ''.join([" " if ord(i) < 32 or ord(i) > 126 else i  
+                           for i in x]))
+  return df
 
 class GDCBExplorer:
   """
@@ -72,6 +85,8 @@ class GDCBExplorer:
         self._logger("__name__: {}".format(__name__))
         self._logger("__file__: {}".format(__file__))
     self._load_config()
+    
+    self.SetupVariables()
     return
   
   def _logger(self, logstr, show = True):
@@ -109,24 +124,159 @@ class GDCBExplorer:
                                  self.s_prefix + __lib__+"_result_data.csv")
     self.log_file = os.path.join(self.save_folder, 
                                  self.s_prefix + __lib__+"_log.txt")
+    self.img_file_base = os.path.join(self.save_folder, 
+                                      "IMG")
     self._logger("LOGfile: {}".format(self.log_file[:30]))
     return  
 
   def _load_config(self, str_file = 'gdcb_config.txt'):
-      """
-      Load JSON configuration file
-      """
+    """
+    Load JSON configuration file
+    """
+    
+    cfg_file = open(str_file)
+    self.config_data = json.load(cfg_file) 
+    return
+  
+  def SetupVariables(self):
+    """
+     load predictor variables from SQL Server repository and prepare raw-data 
+     dataframe structure (by loading)
+    """
+    self._logger("Setup predictors and raw data repo...")
+    s_pred_table = self.config_data["PREDICTOR_TABLE"]
+    s_rawd_table = self.config_data["RAWDATA_TABLE"]
+    s_cars_table = self.config_data["CARS_TABLE"]
+    
+    self.code_field = self.config_data["CODE_FIELD"]
+    self.size_field = self.config_data["SIZE_FIELD"]
+    
+    self.raw_nval_field = self.config_data["RAW_NVAL_FIELD"]
+    self.raw_sval_field = self.config_data["RAW_SVAL_FIELD"]
+    self.raw_code_field = self.config_data["RAW_CODE_FIELD"]
+    self.raw_time_field = self.config_data["RAW_TIME_FIELD"]
+    self.raw_cari_field = self.config_data["RAW_CARI_FIELD"]
+    
+    self.df_predictors = self.sql_eng.ReadTable(s_pred_table)
+    if not self.df_predictors is None:
+      self.df_predictors.fillna(0,inplace = True)
+      self._logger("Loaded {} predictors".format(self.df_predictors.shape[0]))
       
-      cfg_file = open(str_file)
-      config_data = json.load(cfg_file) 
-      return
+    self.df_rawdata = self.sql_eng.GetEmptyTable(s_rawd_table)
+    if not self.df_rawdata is None:
+      self.df_rawdata.drop(self.config_data["RAW_IGNR_FIELD"], 
+                           axis=1, inplace=True)
+      self._logger("RawData: {}".format(list(self.df_rawdata.columns)))
+    
+    self.df_cars = self.sql_eng.ReadTable(s_cars_table)
+    if not self.df_cars is None:
+      self._logger("Loaded {} cars".format(self.df_cars.shape[0]))
+    
+    self._logger("Done data preparation.")
+    return
+  
+  def DumpRawData(self):
+    """
+    saves raw data to the sql table
+    """
+    assert not (self.sql_eng.engine is None)
+    self._logger("Saving raw data ...")
+    self.sql_eng.SaveTable(self.df_rawdata, self.config_data["RAWDATA_TABLE"])
+    self._logger("Done saving raw data.")
+    return
+  
+  def EmptyRawData(self):
+    self.df_rawdata = self.df_rawdata[0:0]
+    return
+    
+  def _sample_number(self,nbytes):    
+    v = 0
+    for i in range(nbytes*2):
+      v += np.random.randint(0,16) * (16**i)
+    return v
+    
+  def SampleRaw(self, sample_size):
+    self._logger("Sampling data [{}]...".format(sample_size))
+    nr_codes = self.df_predictors.shape[0]
+    self.EmptyRawData()
+    assert nr_codes != 0
+    for i in range(sample_size):
+      n = np.random.randint(0,nr_codes)
+      c = np.random.randint(0, self.df_cars.shape[0])
+      carid = self.df_cars.iloc[c,0] 
+      s_code = self.df_predictors.loc[n,self.code_field]
+      nowtime = dt.now()
+      strnowtime = nowtime.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+      nbytes = int(self.df_predictors.loc[n,self.size_field])
+      nval = self._sample_number(nbytes)
+      sb16val = hex(nval)
+      if nbytes>8:
+        nval = 0
+      self.df_rawdata.loc[i,self.raw_code_field] = s_code
+      self.df_rawdata.loc[i,self.raw_nval_field] = nval
+      self.df_rawdata.loc[i,self.raw_sval_field] = sb16val
+      self.df_rawdata.loc[i,self.raw_time_field] = strnowtime
+      self.df_rawdata.loc[i,self.raw_cari_field] = carid
+
+    self.df_rawdata[self.raw_code_field] = self.df_rawdata[self.raw_code_field].astype(int) 
+    self._logger("Done sampling data.")
+    self.DumpRawData()
+    
+      
+  def SampleRange(self, nr_samples, sample_size):
+    self._logger("Sampling {} data of size [{}]...".format(nr_samples, sample_size))
+    t0 = tm.time()
+    for i in range(nr_samples):
+      self._logger("Sampling {}/{}".format(i,nr_samples))
+      self.SampleRaw(sample_size)
+    t1 = tm.time()
+    self._logger("Data sampling for {} data of size [{}] finished in {:.1f}s".format(
+                   nr_samples, sample_size, t1-t0))
+    return
+    
+  def TelemetryStatistics(self):
+    s_tab = self.config_data["VIEW_ALLDATA"]
+    s_desc = self.config_data["RAW_CODE_DESCR"]
+    df = self.sql_eng.ReadTable(s_tab)
+    codes = list(self.df_predictors[self.code_field])
+    assert len(codes) != 0
+    for code in codes:
+      df_temp = df[df[self.raw_code_field] == code]
+      if df_temp.shape[0] >0:
+        df_temp.reset_index(drop = True, inplace = True)
+        slabel = df_temp.loc[0,s_desc]
+        if slabel[:3] != "PID":      
+          self._logger("Generating statistics [code: {} recs:{} desc:{}".format(
+                       code,
+                       df_temp.shape[0],
+                       slabel[:15]))
+          values = df_temp[self.raw_nval_field]
+          plt.figure()
+          plt.hist(values)
+          plt.title(slabel)
+          sfile = self.img_file_base + str(code)+".png"
+          plt.savefig(sfile)
+    return
+      
+    
   
 
 if __name__ =="__main__":
   
-  RUN_UPLOAD = True
+  RUN_UPLOAD = False
   
   explorer = GDCBExplorer()
   if RUN_UPLOAD:
-    df = pd.read_csv("../data/mode01_codes.csv", encoding = "ISO-8859-1")  
-    explorer.sql_eng.OverwriteTable(df,"codes_v1")
+    dft = pd.read_csv("../tests/mode01_codes_raw.csv",encoding = "ISO-8859-1") 
+    dft = clean_nonascii_df(dft)
+    dft.to_csv("../tests/mode01_codes.csv", index=False)
+    df = pd.read_csv("../tests/mode01_codes.csv") 
+
+    explorer.sql_eng.SaveTable(df,"Codes")
+  
+    
+  explorer.SampleRange(5,10)
+  explorer.TelemetryStatistics()
+  
+    
+  
