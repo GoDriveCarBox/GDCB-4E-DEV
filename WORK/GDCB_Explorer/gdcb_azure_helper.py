@@ -17,13 +17,13 @@ __author__     = "Andrei Ionut DAMIAN"
 __copyright__  = "Copyright 2007 4E Software"
 __credits__    = ["Andrei Simion"]
 __license__    = "GPL"
-__version__    = "1.3.1"
+__version__    = "1.3.3"
 __maintainer__ = "Andrei Ionut DAMIAN"
 __email__      = "damian@4esoft.ro"
 __status__     = "Production"
 __library__    = "AZURE SQL HELPER"
 __created__    = "2017-01-25"
-__modified__   = "2017-05-25"
+__modified__   = "2017-06-01"
 __lib__        = "SQLHLP"
 
 
@@ -64,6 +64,7 @@ class MSSQLHelper:
           self.dfolder = os.path.join(self.cwd,self.dfolder)
           
       self.data_folder = self.dfolder
+          
       self.dfolder = os.path.join(self.dfolder,"db_cache")
       
       if not os.path.isdir(self.dfolder):
@@ -242,12 +243,31 @@ class MSSQLHelper:
           if show:
               print(logstr, flush = True)
       return
+  
+  def ClearCache(self):
+    self._logger("Cleaning DB cache ...")
+    self.EmptyFolder(self.dfolder)
+    self._logger("Done cleaning DB cache.")
+    return
+    
+  def EmptyFolder(self, sFolder):
+    for the_file in os.listdir(sFolder):
+        file_path = os.path.join(sFolder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            #elif os.path.isdir(file_path): shutil.rmtree(file_path)
+        except Exception as e:
+            print(e)    
+    return
+    
 
   
   def __exit__(self, exc_type, exc_val, exc_tb):
       self.conn.close()
       self._logger("__exit__")
       return
+  
       
 
           

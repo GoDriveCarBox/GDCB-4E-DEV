@@ -40,6 +40,38 @@ def clean_nonascii_df(df):
         lambda x: ''.join([" " if ord(i) < 32 or ord(i) > 126 else i  
                            for i in x]))
   return df
+  
+class RandomWalker:
+  
+  def __init__(self,range_min, range_max, int_vals = False):
+    self.step = 0
+    avg = (range_max - range_min) / 2
+    self.value = range_min + np.random.uniform(low=0.0, high=avg)
+    self.inc_max = 2
+    if avg<1:
+      self.inc_max = np.random.uniform(low=0.01, high = avg/2)      
+    self.min = range_min
+    self.max = range_max
+    self.int_vals = int_vals
+    if self.int_vals:
+      self.value = int(self.value)
+    return
+  
+  def GetValue(self):
+    self.step += 1
+    if self.int_vals:
+      increment = np.random.randint(-self.inc_max,self.inc_max) 
+    else:
+      increment = np.random.uniform(low = -self.inc_max, 
+                                    high = self.inc_max)
+    self.value += increment
+    if self.value < self.min:
+      self.value = self.min
+      
+    if self.value >self.max:
+      self.value = self.max
+      
+    return self.value
 
 class GDCBExplorer:
   """
@@ -151,11 +183,21 @@ class GDCBExplorer:
     self.code_field = self.config_data["CODE_FIELD"]
     self.size_field = self.config_data["SIZE_FIELD"]
     
+    self.min_field = self.config_data["MIN_FIELD"]
+    self.max_field = self.config_data["MAX_FIELD"]
+    self.mul_field = self.config_data["MUL_FIELD"]  
+    self.add_field = self.config_data["ADD_FIELD"] 
+    self.units_field = self.config_data["UNITS_FIELD"]  
+    self.active_field = self.config_data["ENABLED_FIELD"]
+    
     self.raw_nval_field = self.config_data["RAW_NVAL_FIELD"]
     self.raw_sval_field = self.config_data["RAW_SVAL_FIELD"]
     self.raw_code_field = self.config_data["RAW_CODE_FIELD"]
     self.raw_time_field = self.config_data["RAW_TIME_FIELD"]
     self.raw_cari_field = self.config_data["RAW_CARI_FIELD"]
+    
+    self.raw_vwnv_field = self.config_data["RAW_VIEWABLE_VAL_FIELD"]
+    self.raw_vwsv_field = self.config_data["RAW_VIEWABLE_STR_FIELD"]
     
     self.df_predictors = self.sql_eng.ReadTable(s_pred_table)
     if not self.df_predictors is None:
@@ -195,28 +237,44 @@ class GDCBExplorer:
       v += np.random.randint(0,16) * (16**i)
     return v
     
-  def SampleRaw(self, sample_size):
+  def SampleRaw(self, sample_size, car_id):
+    car_components = {}
     self._logger("Sampling data [{}]...".format(sample_size))
     nr_codes = self.df_predictors.shape[0]
     self.EmptyRawData()
     assert nr_codes != 0
     for i in range(sample_size):
       n = np.random.randint(0,nr_codes)
-      c = np.random.randint(0, self.df_cars.shape[0])
-      carid = self.df_cars.iloc[c,0] 
-      s_code = self.df_predictors.loc[n,self.code_field]
+      while not (self.df_predictors.loc[n,self.active_field]):
+        n = np.random.randint(0,nr_codes)
+        
+      s_code = self.df_predictors.loc[n,self.code_field]       
+      min_val = float(self.df_predictors.loc[n,self.min_field])
+      max_val = float(self.df_predictors.loc[n,self.max_field])  
+      mul_val = float(self.df_predictors.loc[n,self.mul_field]) 
+      add_val = float(self.df_predictors.loc[n,self.add_field]) 
+      sunits =  self.df_predictors.loc[n,self.units_field] 
+      
+      if not (s_code in car_components.keys()):
+        car_components[s_code] = RandomWalker(min_val, max_val)
+        
+      val = car_components[s_code].GetValue()
+      
+      nval = int((val - add_val) / mul_val)
+
       nowtime = dt.now()
       strnowtime = nowtime.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-      nbytes = int(self.df_predictors.loc[n,self.size_field])
-      nval = self._sample_number(nbytes)
       sb16val = hex(nval)
-      if nbytes>8:
-        nval = 0
-      self.df_rawdata.loc[i,self.raw_code_field] = s_code
+
+      self.df_rawdata.loc[i,self.raw_code_field] = str(s_code)
       self.df_rawdata.loc[i,self.raw_nval_field] = nval
       self.df_rawdata.loc[i,self.raw_sval_field] = sb16val
       self.df_rawdata.loc[i,self.raw_time_field] = strnowtime
-      self.df_rawdata.loc[i,self.raw_cari_field] = carid
+      self.df_rawdata.loc[i,self.raw_cari_field] = str(car_id)
+      self.df_rawdata.loc[i,self.raw_vwnv_field] = str(val)
+      self.df_rawdata.loc[i,self.raw_vwsv_field] = "{:.2f} {}".format(
+                                    val,
+                                    sunits)
 
     self.df_rawdata[self.raw_code_field] = self.df_rawdata[self.raw_code_field].astype(int) 
     self._logger("Done sampling data.")
@@ -224,17 +282,22 @@ class GDCBExplorer:
     
       
   def SampleRange(self, nr_samples, sample_size):
-    self._logger("Sampling {} data of size [{}]...".format(nr_samples, sample_size))
+    self._logger("Sampling {} data of size [{}]...".format(
+                 nr_samples, 
+                 sample_size))
     t0 = tm.time()
     for i in range(nr_samples):
-      self._logger("Sampling {}/{}".format(i,nr_samples))
-      self.SampleRaw(sample_size)
+      c = np.random.randint(0, self.df_cars.shape[0])
+      carid = self.df_cars.iloc[c,0] 
+      self._logger("Sampling {}/{} for car:{}".format(i,nr_samples,carid))
+      self.SampleRaw(sample_size = sample_size, car_id = carid)
     t1 = tm.time()
     self._logger("Data sampling for {} data of size [{}] finished in {:.1f}s".format(
                    nr_samples, sample_size, t1-t0))
     return
     
   def TelemetryStatistics(self):
+    
     s_tab = self.config_data["VIEW_ALLDATA"]
     s_desc = self.config_data["RAW_CODE_DESCR"]
     df = self.sql_eng.ReadTable(s_tab)
@@ -257,26 +320,34 @@ class GDCBExplorer:
           sfile = self.img_file_base + str(code)+".png"
           plt.savefig(sfile)
     return
+    
+  def CleanupCache(self):
+    self.sql_eng.ClearCache()
+    return
+    
       
     
   
 
 if __name__ =="__main__":
   
-  RUN_UPLOAD = False
+  RUN_UPLOAD = False 
   
   explorer = GDCBExplorer()
   if RUN_UPLOAD:
+    explorer.CleanupCache()
     dft = pd.read_csv("../tests/mode01_codes_raw.csv",encoding = "ISO-8859-1") 
     dft = clean_nonascii_df(dft)
     dft.to_csv("../tests/mode01_codes.csv", index=False)
     df = pd.read_csv("../tests/mode01_codes.csv") 
-
-    explorer.sql_eng.SaveTable(df,"Codes")
-  
     
-  explorer.SampleRange(5,10)
-  explorer.TelemetryStatistics()
+    explorer.sql_eng.OverwriteTable(df,"Codes")
+    print("\n\n Restarting ...\n\n")
+    del explorer
+  
+  explorer = GDCBExplorer()    
+  explorer.SampleRange(3,10000)
+  #explorer.TelemetryStatistics()
   
     
   

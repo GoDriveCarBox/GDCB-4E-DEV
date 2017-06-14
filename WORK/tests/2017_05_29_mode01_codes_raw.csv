@@ -1,0 +1,130 @@
+ID,Mode,Segment,Code,Size,ReqInfo,Description,Date added,Min value,Max value,Units
+1000,Mode 01,00-20,00,4,,PIDs supported range 00-20,2017-05-26 20:20,,,
+1001,Mode 01,00-20,01,4,,Monitor status since DTCs cleared. (Includes malfunction indicator lamp (MIL) status and number of DTCs.),2017-05-26 20:20,,,
+1002,Mode 01,00-20,02,2,,Freeze DTC,2017-05-26 20:20,,,
+1003,Mode 01,00-20,03,2,,Fuel system status,2017-05-26 20:20,,,
+1004,Mode 01,00-20,04,1,,Calculated engine load,2017-05-26 20:20,0.00,100.00, %
+1005,Mode 01,00-20,05,1,,Engine coolant temperature,2017-05-26 20:20,-40.00,215.00,deg.C
+1006,Mode 01,00-20,06,1,,Short term fuel trim?Bank 1,2017-05-26 20:20,-100 (Reduce Fuel: Too Rich),99.2 (Add Fuel: Too Lean), %
+1007,Mode 01,00-20,07,1,,Long term fuel trim?Bank 1,2017-05-26 20:20,,,
+1008,Mode 01,00-20,08,1,,Short term fuel trim?Bank 2,2017-05-26 20:20,,,
+1009,Mode 01,00-20,09,1,,Long term fuel trim?Bank 2,2017-05-26 20:20,,,
+1010,Mode 01,00-20,0A,1,,Fuel pressure (gauge pressure),2017-05-26 20:20,0.00,765.00,kPa
+1011,Mode 01,00-20,0B,1,,Intake manifold absolute pressure,2017-05-26 20:20,0.00,255.00,kPa
+1012,Mode 01,00-20,0C,2,,Engine RPM,2017-05-26 20:20,0.00,16383.75,rpm
+1013,Mode 01,00-20,0D,1,,Vehicle speed,2017-05-26 20:20,0.00,255.00,km/h
+1014,Mode 01,00-20,0E,1,,Timing advance,2017-05-26 20:20,-64.00,63.50,deg. before TDC
+1015,Mode 01,00-20,0F,1,,Intake air temperature,2017-05-26 20:20,-40.00,215.00,
+1016,Mode 01,00-20,10,2,,MAF air flow rate,2017-05-26 20:20,0.00,655.35,deg.C
+1017,Mode 01,00-20,11,1,,Throttle position,2017-05-26 20:20,0.00,100.00,grams/sec
+1018,Mode 01,00-20,12,1,,Commanded secondary air status,2017-05-26 20:20,,, %
+1019,Mode 01,00-20,13,1,,Oxygen sensors present (in 2 banks),2017-05-26 20:20,,,
+1020,Mode 01,00-20,14,2,,Oxygen Sensor 1 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,0 / -100,1.275 / 99.2,
+1021,Mode 01,00-20,15,2,,Oxygen Sensor 2 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,volts  / %
+1022,Mode 01,00-20,16,2,,Oxygen Sensor 3 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1023,Mode 01,00-20,17,2,,Oxygen Sensor 4 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1024,Mode 01,00-20,18,2,,Oxygen Sensor 5 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1025,Mode 01,00-20,19,2,,Oxygen Sensor 6 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1026,Mode 01,00-20,1A,2,,Oxygen Sensor 7 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1027,Mode 01,00-20,1B,2,,Oxygen Sensor 8 / A: Voltage / B: Short term fuel trim,2017-05-26 20:20,,,
+1028,Mode 01,00-20,1C,1,,OBD standards this vehicle conforms to,2017-05-26 20:20,,,
+1029,Mode 01,00-20,1D,1,,Oxygen sensors present (in 4 banks),2017-05-26 20:20,,,
+1030,Mode 01,00-20,1E,1,,Auxiliary input status,2017-05-26 20:20,,,
+1031,Mode 01,00-20,1F,2,,Run time since engine start,2017-05-26 20:20,0.00,65535.00,
+1032,Mode 01,21-40,20,4,,PIDs supported range 21-40,2017-05-26 20:20,,,seconds
+1033,Mode 01,21-40,21,2,,Distance traveled with malfunction indicator lamp (MIL) on,2017-05-26 20:20,0.00,65535.00,
+1034,Mode 01,21-40,22,2,,Fuel Rail Pressure (relative to manifold vacuum),2017-05-26 20:20,0.00,5177.27,km
+1035,Mode 01,21-40,23,2,,Fuel Rail Gauge Pressure (diesel- or gasoline direct injection),2017-05-26 20:20,0.00,655350.00,kPa
+1036,Mode 01,21-40,24,4,,Oxygen Sensor 1 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,0 / 0,< 2 / < 8,kPa
+1037,Mode 01,21-40,25,4,,Oxygen Sensor 2 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,ratio / V
+1038,Mode 01,21-40,26,4,,Oxygen Sensor 3 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1039,Mode 01,21-40,27,4,,Oxygen Sensor 4 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1040,Mode 01,21-40,28,4,,Oxygen Sensor 5 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1041,Mode 01,21-40,29,4,,Oxygen Sensor 6 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1042,Mode 01,21-40,2A,4,,Oxygen Sensor 7 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1043,Mode 01,21-40,2B,4,,Oxygen Sensor 8 / AB: Fuel?Air Equivalence Ratio / CD: Voltage,2017-05-26 20:20,,,
+1044,Mode 01,21-40,2C,1,,Commanded EGR,2017-05-26 20:20,0.00,100.00,
+1045,Mode 01,21-40,2D,1,,EGR Error,2017-05-26 20:20,-100.00,99.20, %
+1046,Mode 01,21-40,2E,1,,Commanded evaporative purge,2017-05-26 20:20,0.00,100.00, %
+1047,Mode 01,21-40,2F,1,,Fuel Tank Level Input,2017-05-26 20:20,0.00,100.00, %
+1048,Mode 01,21-40,30,1,,Warm-ups since codes cleared,2017-05-26 20:20,0.00,255.00, %
+1049,Mode 01,21-40,31,2,,Distance traveled since codes cleared,2017-05-26 20:20,0.00,65535.00,count
+1050,Mode 01,21-40,32,2,,Evap. System Vapor Pressure,2017-05-26 20:20,-8192.00,8191.75,km
+1051,Mode 01,21-40,33,1,,Absolute Barometric Pressure,2017-05-26 20:20,0.00,255.00,Pa
+1052,Mode 01,21-40,34,4,,Oxygen Sensor 1 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,0 / -128,< 2 / <128,kPa
+1053,Mode 01,21-40,35,4,,Oxygen Sensor 2 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,ratio / mA
+1054,Mode 01,21-40,36,4,,Oxygen Sensor 3 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1055,Mode 01,21-40,37,4,,Oxygen Sensor 4 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1056,Mode 01,21-40,38,4,,Oxygen Sensor 5 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1057,Mode 01,21-40,39,4,,Oxygen Sensor 6 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1058,Mode 01,21-40,3A,4,,Oxygen Sensor 7 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1059,Mode 01,21-40,3B,4,,Oxygen Sensor 8 / AB: Fuel?Air Equivalence Ratio / CD: Current,2017-05-26 20:20,,,
+1060,Mode 01,21-40,3C,2,,Catalyst Temperature: Bank 1- Sensor 1,2017-05-26 20:20,-40.00,6513.50,
+1061,Mode 01,21-40,3D,2,,Catalyst Temperature: Bank 2- Sensor 1,2017-05-26 20:20,,,deg.C
+1062,Mode 01,21-40,3E,2,,Catalyst Temperature: Bank 1- Sensor 2,2017-05-26 20:20,,,
+1063,Mode 01,21-40,3F,2,,Catalyst Temperature: Bank 2- Sensor 2,2017-05-26 20:20,,,
+1064,Mode 01,41-60,40,4,,PIDs supported range 41-60,2017-05-26 20:20,,,
+1065,Mode 01,41-60,41,4,,Monitor status this drive cycle,2017-05-26 20:20,,,
+1066,Mode 01,41-60,42,2,,Control module voltage,2017-05-26 20:20,0.00,65.54,
+1067,Mode 01,41-60,43,2,,Absolute load value,2017-05-26 20:20,0.00,25700.00,V
+1068,Mode 01,41-60,44,2,,Fuel?Air commanded equivalence ratio,2017-05-26 20:20,0.00,< 2, %
+1069,Mode 01,41-60,45,1,,Relative throttle position,2017-05-26 20:20,0.00,100.00,ratio
+1070,Mode 01,41-60,46,1,,Ambient air temperature,2017-05-26 20:20,-40.00,215.00, %
+1071,Mode 01,41-60,47,1,,Absolute throttle position B,2017-05-26 20:20,0.00,100.00,deg.C
+1072,Mode 01,41-60,48,1,,Absolute throttle position C,2017-05-26 20:20,,, %
+1073,Mode 01,41-60,49,1,,Accelerator pedal position D,2017-05-26 20:20,,,
+1074,Mode 01,41-60,4A,1,,Accelerator pedal position E,2017-05-26 20:20,,,
+1075,Mode 01,41-60,4B,1,,Accelerator pedal position F,2017-05-26 20:20,,,
+1076,Mode 01,41-60,4C,1,,Commanded throttle actuator,2017-05-26 20:20,,,
+1077,Mode 01,41-60,4D,2,,Time run with MIL on,2017-05-26 20:20,0.00,65535.00,
+1078,Mode 01,41-60,4E,2,,Time since trouble codes cleared,2017-05-26 20:20,,,minutes
+1079,Mode 01,41-60,4F,4,,Maximum value for Fuel?Air equivalence ratio- oxygen sensor voltage- oxygen sensor current- and intake manifold absolute pressure,2017-05-26 20:20,0  0  0  0,255  255  255  2550,
+1080,Mode 01,41-60,50,4,,Maximum value for air flow rate from mass air flow sensor,2017-05-26 20:20,0.00,2550.00,ratio  V  mA  kPa
+1081,Mode 01,41-60,51,1,,Fuel Type,2017-05-26 20:20,,,g/s
+1082,Mode 01,41-60,52,1,,Ethanol fuelÿ%,2017-05-26 20:20,0.00,100.00,
+1083,Mode 01,41-60,53,2,,Absolute Evap system Vapor Pressure,2017-05-26 20:20,0.00,327.68, %
+1084,Mode 01,41-60,54,2,,Evap system vapor pressure,2017-05-26 20:20,-32767.00,32768.00,kPa
+1085,Mode 01,41-60,55,2,,Short term secondary oxygen sensor trim- A: bank 1- B: bank 3,2017-05-26 20:20,-100.00,99.20,Pa
+1086,Mode 01,41-60,56,2,,Long term secondary oxygen sensor trim- A: bank 1- B: bank 3,2017-05-26 20:20,,, %
+1087,Mode 01,41-60,57,2,,Short term secondary oxygen sensor trim- A: bank 2- B: bank 4,2017-05-26 20:20,,,
+1088,Mode 01,41-60,58,2,,Long term secondary oxygen sensor trim- A: bank 2- B: bank 4,2017-05-26 20:20,,,
+1089,Mode 01,41-60,59,2,,Fuel rail absolute pressure,2017-05-26 20:20,0.00,655350.00,
+1090,Mode 01,41-60,5A,1,,Relative accelerator pedal position,2017-05-26 20:20,0.00,100.00,kPa
+1091,Mode 01,41-60,5B,1,,Hybrid battery pack remaining life,2017-05-26 20:20,0.00,100.00, %
+1092,Mode 01,41-60,5C,1,,Engine oil temperature,2017-05-26 20:20,-40.00,210.00, %
+1093,Mode 01,41-60,5D,2,,Fuel injection timing,2017-05-26 20:20,-210.00,301.99,deg.C
+1094,Mode 01,41-60,5E,2,,Engine fuel rate,2017-05-26 20:20,0.00,3276.75,deg.
+1095,Mode 01,41-60,5F,1,,Emission requirements to which vehicle is designed,2017-05-26 20:20,,,L/h
+1096,Mode 01,61-80,60,4,,PIDs supported range 61-80,2017-05-26 20:20,,,
+1097,Mode 01,61-80,61,1,,Driver's demand engine - percent torque,2017-05-26 20:20,-125.00,125.00,
+1098,Mode 01,61-80,62,1,,Actual engine - percent torque,2017-05-26 20:20,-125.00,125.00, %
+1099,Mode 01,61-80,63,2,,Engine reference torque,2017-05-26 20:20,0.00,65535.00, %
+1100,Mode 01,61-80,64,5,,Engine percent torque data,2017-05-26 20:20,-125.00,125.00,Nm
+1101,Mode 01,61-80,65,2,,Auxiliary input / output supported,2017-05-26 20:20,,, %
+1102,Mode 01,61-80,66,5,,Mass air flow sensor,2017-05-26 20:20,,,
+1103,Mode 01,61-80,67,3,,Engine coolant temperature,2017-05-26 20:20,,,
+1104,Mode 01,61-80,68,7,,Intake air temperature sensor,2017-05-26 20:20,,,
+1105,Mode 01,61-80,69,7,,Commanded EGR and EGR Error,2017-05-26 20:20,,,
+1106,Mode 01,61-80,6A,5,,Commanded Diesel intake air flow control and relative intake air flow position,2017-05-26 20:20,,,
+1107,Mode 01,61-80,6B,5,,Exhaust gas recirculation temperature,2017-05-26 20:20,,,
+1108,Mode 01,61-80,6C,5,,Commanded throttle actuator control and relative throttle position,2017-05-26 20:20,,,
+1109,Mode 01,61-80,6D,6,,Fuel pressure control system,2017-05-26 20:20,,,
+1110,Mode 01,61-80,6E,5,,Injection pressure control system,2017-05-26 20:20,,,
+1111,Mode 01,61-80,6F,3,,Turbocharger compressor inlet pressure,2017-05-26 20:20,,,
+1112,Mode 01,61-80,70,9,,Boost pressure control,2017-05-26 20:20,,,
+1113,Mode 01,61-80,71,5,,Variable Geometry turbo (VGT) control,2017-05-26 20:20,,,
+1114,Mode 01,61-80,72,5,,Wastegate control,2017-05-26 20:20,,,
+1115,Mode 01,61-80,73,5,,Exhaust pressure,2017-05-26 20:20,,,
+1116,Mode 01,61-80,74,5,,Turbocharger RPM,2017-05-26 20:20,,,
+1117,Mode 01,61-80,75,7,,Turbocharger temperature,2017-05-26 20:20,,,
+1118,Mode 01,61-80,76,7,,Turbocharger temperature,2017-05-26 20:20,,,
+1119,Mode 01,61-80,77,5,,Charge air cooler temperature (CACT),2017-05-26 20:20,,,
+1120,Mode 01,61-80,78,9,,Exhaust Gas temperature (EGT) Bank 1,2017-05-26 20:20,,,
+1121,Mode 01,61-80,79,9,,Exhaust Gas temperature (EGT) Bank 2,2017-05-26 20:20,,,
+1122,Mode 01,61-80,7A,7,,Diesel particulate filter (DPF),2017-05-26 20:20,,,
+1123,Mode 01,61-80,7B,7,,Diesel particulate filter (DPF),2017-05-26 20:20,,,
+1124,Mode 01,61-80,7C,9,,Diesel Particulate filter (DPF) temperature,2017-05-26 20:20,,,
+1125,Mode 01,61-80,7D,1,,NOx NTE (Not-To-Exceed) control area status,2017-05-26 20:20,,,
+1126,Mode 01,61-80,7E,1,,PM NTE (Not-To-Exceed) control area status,2017-05-26 20:20,,,
+1127,Mode 01,61-80,7F,13,,Engine run time,2017-05-26 20:20,,,
+1128,Mode 01,61-80,80,,,PIDs supported range 81-A0,2017-05-26 20:20,,,
