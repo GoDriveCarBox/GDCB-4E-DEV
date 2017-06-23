@@ -346,7 +346,7 @@ if __name__ =="__main__":
     del explorer
   
   explorer = GDCBExplorer()    
-  explorer.SampleRange(3,10000)
+  explorer.SampleRange(2,10000)
   #explorer.TelemetryStatistics()
   
     
