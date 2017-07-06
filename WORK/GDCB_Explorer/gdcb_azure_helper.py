@@ -267,12 +267,6 @@ class MSSQLHelper:
       self.conn.close()
       self._logger("__exit__")
       return
-  
-      
-
-          
-      
-
         
 if __name__ == '__main__':
 
