@@ -1,0 +1,26 @@
+[GDCBDE][2017-10-13 12:24:48] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-10-13 12:24:48] [SQLHLP] Using data folder:...uisition/api/_godrive_data/db_cache
+[GDCBDE][2017-10-13 12:24:48] [SQLHLP] ODBC Conn: DRIVER={/usr/local/lib/libmsodbcsql...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Connection created on carbox.database.windows.net
+[GDCBDE][2017-10-13 12:24:49] LOGfile: /Users/pkenobi23/Dropbox/21. G
+[GDCBDE][2017-10-13 12:24:49] Work folder: [/Users/pkenobi23/Dropbox/21. GODRIVE_WORK/01_work/WORK/iot_acquisition/api/_godrive_data]
+[GDCBDE][2017-10-13 12:24:49] INIT DATA EXPLORER v0.1.1
+[GDCBDE][2017-10-13 12:24:49] Setup predictors and raw data repo...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Loading file [..ata/db_cache/SELECT_FROM_Codes_.csv] ...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Dataset loaded: 0.01MB in 0.0s(0.0m) 134 rows
+[GDCBDE][2017-10-13 12:24:49] Loaded 134 predictors
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Downloading data [SELECT TOP (1) * FROM [RawData..] ...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Dataset loaded: 0.00MB in 0.1s(0.0m) 1 rows
+[GDCBDE][2017-10-13 12:24:49] RawData: ['CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Loading file [..data/db_cache/SELECT_FROM_Cars_.csv] ...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 56 rows
+[GDCBDE][2017-10-13 12:24:49] Loaded 56 cars
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Loading file [..a/db_cache/SELECT_FROM_RawData_.csv] ...
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Dataset loaded: 0.99MB in 0.1s(0.0m) 16182 rows
+[GDCBDE][2017-10-13 12:24:49] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'IntValue', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-10-13 12:24:49] Done data preparation.
+[GDCBDE][2017-10-13 12:24:49] [SQLHLP] Downloading data [SELECT * FROM [RawData]..] ...
+[GDCBDE][2017-10-13 12:24:52] [SQLHLP] Dataset loaded: 1.06MB in 3.2s(0.1m) 17394 rows
+[GDCBDE][2017-10-13 12:24:52] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-10-13 12:24:52] Finished associating columns
+[GDCBDE][2017-10-13 12:24:52] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']

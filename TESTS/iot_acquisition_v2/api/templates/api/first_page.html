@@ -1,0 +1,650 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Title and Meta Tags Begins -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+	<title>GoDrive Carbox</title>
+	<!-- Title and Meta Tags Ends -->
+
+	<!-- Google Font Begins -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,800italic,700,300italic,700italic,400italic' rel='stylesheet' type='text/css'>
+	<!-- Google Font Ends -->
+
+	<!-- CSS Begins-->
+	<link href='http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+
+
+   <!-- CSS Begins-->
+	<link href='http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+
+
+    <link href="{% static 'api/erik_assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'api/erik_assets/css/carousel.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'api/erik_assets/css/animate.min.css' %}" rel="stylesheet" type="text/css"/>
+	<link href="{% static 'api/erik_assets/css/YTPlayer.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'api/erik_assets/css/simple-line-icons.css' %}" rel="stylesheet" type="text/css" />
+	<!-- Main Style -->
+	<link href="{% static 'api/erik_assets/css/first_style.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'api/erik_assets/css/first_responsive.css' %}" rel="stylesheet" type="text/css" />
+	<!-- Color Panel -->
+    <link href="{% static 'api/erik_assets/css/first_color-panel.css' %}" rel="stylesheet" type="text/css" />
+
+		<style>
+
+		    .modal  {
+		        margin-top: 15%;
+						vertical-align: middle;
+		    }
+		     .modal-header {
+		          padding: 0;
+		    }
+		    .modal-header .close {
+		      padding: 10px 15px;
+		    }
+		    .modal-header ul {
+		      border: none;
+		    }
+		    .modal-header ul li {
+		      margin: 0;
+		    }
+		    .modal-header ul li button {
+		      border: none;
+		      border-radius: 0;
+					background-color: #009ac9 !important;
+		    }
+		    .modal-header ul li.active button {
+					background: #F1C40F !important;
+		      /*opacity: 0.5;*/
+		    }
+		    .modal-header ul li button:hover {
+		      border: none;
+					opacity: 0.5;
+					color: #009ac9;
+		    }
+				.btn:focus .btn:hover .btn-primary:focus .btn-primary:hover	{
+					border: none !important;
+					opacity: 0.5 !important;
+					background: #F1C40F !important;
+					color: #009ac9 !important;
+					font-weight: 900;
+
+				}
+
+		    .modal-header ul li button span {
+		      margin-left: 10px;
+		    }
+		    .modal-body .form-group {
+		      margin-bottom: 10px;
+		    }
+
+				.ghost-button-full-color {
+						  display: inline-block;
+						  padding: 8px;
+						  color: #F1C40F;
+						  background-color: transparent;
+						  border: 2px solid #F1C40F;
+							border-radius: 10px;
+						  text-align: center;
+						  outline: none;
+						  text-decoration: none;
+						  transition: color 0.3s ease-out,
+		          background-color 0.3s ease-out,
+		          border-color 0.3s ease-out;
+		}
+				.ghost-button-full-color:hover,
+				.ghost-button-full-color:active {
+						  background-color: #009ac9;
+						  border-color: #009ac9;
+						  color: #F1C40F;
+				}
+		</style>
+
+
+</head>
+<body>
+
+	<!-- Page Loader -->
+	<div class="pageloader"></div>
+
+	<!-- Wrapper Begins -->
+	<div id="wrapper" class="wrapper-class">
+		<!-- Header Begins -->
+		<div id="header" class="header-section">
+			<!-- Sticky Header Begins -->
+			<div id="sticky-menu" class="sticky-navigation">
+				<div class="logo-container">
+					<div class="container">
+						<div class="row">
+
+							<!-- Logo Begins -->
+							<div class="col-md-2 logo">
+								<a href="#" title="GoDrive"><img class="img-responsive" src="{% static 'api/erik_assets/images/logo.png' %}" alt="GoDriveCarbox"/></a>
+							</div>
+							<!-- Logo Ends -->
+
+							<!-- Navigation Menu Begins -->
+							<div id="navigation" class="col-md-8 navbar top-navbar no-padding">
+
+								<!-- Mobile Nav Toggle Begins -->
+								<div class="navbar-header nav-respons">
+									<button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+								</div><!-- Mobile Nav Toggle Ends -->
+
+								<!-- Menu Begins -->
+								<nav id="topnav" role="navigation" class="collapse navbar-collapse bs-navbar-collapse no-padding">
+									<ul class="nav navbar-nav navbar-right uppercase">
+										<li><a href="#about" class="scroll">Acasa</a></li>
+										<li><a href="#features" class="scroll">Servicii</a></li>
+										<li><a href="#reviews" class="scroll">Despre</a></li>
+										<li><a href="#video" class="scroll">Blog</a></li>
+										<li><button type="button" class="ghost-button-full-color" data-toggle="modal" data-target=".login-register-form" value="CONTUL MEU" style="color: #F1C40F;">
+							 						CONTUL MEU
+							 				 </button>
+							 		 </li>
+									</ul>
+
+								</nav><!-- Menu Ends -->
+							</div><!-- Navigation Menu Ends -->
+
+							<!-- Social Links Begins -->
+							<div class="col-md-2">
+								<ul class="top-social-icon">
+									<li><a href="#" class="gk-facebook"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="#" class="gk-twitter"><i class="fa fa-twitter"></i></a></li>
+								</ul>
+							</div>
+							<!-- Social Links Ends -->
+
+						</div>
+					</div>
+				</div>
+			</div><!-- Sticky Header Ends -->
+			<!-- Login / Register Modal-->
+							 <div class="modal fade login-register-form" role="dialog">
+									 <div class="modal-dialog modal-sm">
+											 <div class="modal-content">
+													 <div class="modal-header">
+															 <button type="button" class="close" data-dismiss="modal">
+																	 <span class="glyphicon glyphicon-remove"></span>
+															 </button>
+															 <center>
+															 <ul class="nav nav-tabs">
+																	 <li class="active">
+																		 <a data-toggle="tab" href="#login-form"> Login <span class="glyphicon glyphicon-user"></span></a>
+																	 </li>
+																 </ul>
+														 </center>
+													 </div>
+													 <div class="modal-body">
+															 <div class="tab-content">
+																	 <div id="login-form" class="tab-pane fade in active">
+																			 <form method="post">
+																					 <div class="form-group">
+																							 <label for="email">Email:</label>
+																							 <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+																					 </div>
+																					 <div class="form-group">
+																							 <label for="pwd">Password:</label>
+																							 <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+																					 </div>
+																					 <div class="checkbox">
+																							 <label><input type="checkbox" name="remember"> Remember me</label>
+																					 </div>
+
+																					 <button type="submit" class="btn btn-default">Login</button>
+																			 </form>
+																	 </div>
+
+
+															 </div>
+													 </div>
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                    </div>-->
+											 </div>
+									 </div>
+							 </div>
+			<!-- Banner Section Begins -->
+			<div class="triangle-bg">
+				<div id="about" class="banner-section container">
+					<div class="row">
+
+						<!-- Left Banner Image Begins -->
+						<div class="col-md-5 right-banner-image animated" data-animation="fadeInLeft" data-animation-delay="500">
+							<div class="row">
+								<div class="col-md-8">
+									<!-- Banner Image -->
+									<img class="img-responsive" src="{% static 'api/erik_assets/images/iphone-shot3.png' %}" alt="Iphone" />
+
+									<!-- Banner Nav Shape -->
+									<div class="row triangle-shape banner-nav">
+										<div class="col-sm-12">
+											<a href="#features" class="banner-triangle scroll color-white"><i class="flaticon flaticon-arrow351 gk-triangle-bigsharp"></i></a>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div> <!-- Left Banner Image Begins -->
+
+						<!-- Right Banner Slider Begins -->
+						<div class="col-md-7 left-banner-text animated" data-animation="fadeInRight" data-animation-delay="500">
+							<!-- Carousel Slider Begins -->
+							<div id="banner-slider" class="banner-carousel-slider color-yellow">
+								<!-- Slider Item 1 -->
+								<div class="banner-item text-center">
+									<!-- Icon -->
+									<i class="fa fa-magic"></i>
+									<!-- Title -->
+									<h2 class="text-uppercase">Cutia neagră <span class="text-extrabold"> in cloud</span> pentru automobile</h2>
+									<!-- Content -->
+									<p class="slider-text">GoDrive CarBox este o platformă completă pentru monitorizarea, evaluarea și înregistrarea în timp real, în mediu de tip cloud – computing, a funcționării automobilului personal prin tehnologii de tip Internetul Lucrurilor (Internet-of-Things sau IoT)</p>
+									<!-- Button -->
+									<div class="slider-button">
+										<a href="#" class="btn gk-btn green-btn" role="button"><i class="fa fa-usd"></i> Buy Now</a>
+									</div>
+								</div>
+								<!-- Slider Item 2 -->
+								<div class="banner-item text-center">
+									<!-- Icon -->
+									<i class="fa fa-laptop"></i>
+									<!-- Title -->
+									<h1 class="text-uppercase"><span class="text-extrabold">Monitorizare</span></h1>
+									<!-- Content -->
+									<p class="slider-text">Monitorizează parametrii de funcționare ai autovehiculului prin tehnologii de tip Internetul Lucrurilor (Internet of Things)</p>
+									<!-- Button -->
+									<div class="slider-button">
+										<a href="#" class="btn gk-btn green-btn" role="button"><i class="fa fa-tag"></i> Learn More</a>
+									</div>
+								</div>
+
+							</div><!-- Carousel Slider Ends -->
+
+							<!-- Banner Counter Info Begins -->
+							<div class="row">
+								<div class="col-sm-12 banner-image-info">
+									<div class="row">
+										<!-- Column 1 -->
+										<div class="col-sm-4 banner-left-margin">
+											<div class="banner-info col-xs-6 text-right text-uppercase">
+												<div class="count-number" data-count="6249"><span class="counter text-bold"></span></div> Downloaded
+											</div>
+											<div class="banner-info-right col-xs-6 no-padding">
+												<span class="close-brackets">}</span> <i class="fa fa-cloud-download color-yellow"></i>
+											</div>
+										</div>
+										<!-- Column 2 -->
+										<div class="col-sm-4 banner-left-margin">
+											<div class="banner-info col-xs-6 text-right text-uppercase">
+												<div class="count-number" data-count="238"><span class="counter text-bold"></span></div> Android Users
+											</div>
+											<div class="banner-info-right col-xs-6 no-padding">
+												<span class="close-brackets">}</span> <i class="fa fa-android color-yellow"></i>
+											</div>
+										</div>
+										<!-- Column 3 -->
+										<div class="col-sm-4 banner-left-margin">
+											<div class="banner-info col-xs-6 text-right text-uppercase">
+												<div class="count-number" data-count="1027"><span class="counter text-bold"></span></div> IOS Users
+											</div>
+											<div class="banner-info-right col-xs-6 no-padding">
+												<span class="close-brackets">}</span> <i class="fa fa-apple color-yellow"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div><!-- Banner Counter Info Ends -->
+						</div><!-- Right Banner Slider Ends -->
+					</div>
+				</div>
+			</div><!-- Banner Section Ends -->
+		</div><!-- Header Ends -->
+
+		<!-- Layout Begins -->
+		<section id="shapes" class="shape-section">
+			<!-- Shape 1 Container Begins -->
+			<div class="gk-shape-cover">
+				<!-- Shape 1 Color Begins -->
+				<div class="gk-dd-shape grey-green-color index-1">
+					<!-- Features Section Begins -->
+					<div id="features" class="features-section index-big relative">
+						<div class="container relative">
+							<div class="row">
+								<!-- Features Left Info Begins -->
+								<div class="col-md-4 features-left-info animated" data-animation="fadeInLeft" data-animation-delay="500">
+									<!-- Title -->
+									<h3 class="section-msg1 color-grey text-uppercase"><span class="text-extrabold">Se adreseaza: </span></h3>
+									<!-- Content -->
+									<p></p>
+									<!-- Shape Down Arrow -->
+									<p class="color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
+									<!-- List Elements -->
+									<ul class="list-unstyled gk-list color-grey">
+										<li class="text-bold"><span class="simple-icon icon-check"></span> Companiilor de asigurari</li>
+										<li class="text-bold"><span class="simple-icon icon-check"></span> Companiilor ce dețin flote de masini</li>
+										<li class="text-bold"><span class="simple-icon icon-check"></span> Utilizatorilor privați</li>
+										<li class="text-bold no-border"><span class="simple-icon icon-check"></span> Mediului școlar</li>
+									</ul>
+								</div><!-- Features Left Info Ends -->
+								<!-- Features Right Info Begins -->
+								<div class="col-md-8 features-right-info animated" data-animation="fadeInRight" data-animation-delay="500">
+									<!-- Shape Pointer -->
+									<div class="gk-pointer-features gk-right-arrow animated" data-animation="fadeInLeftBig" data-animation-delay="1200">
+										<img src="{% static 'api/erik_assets/images/right-arrow-icon.png' %}" alt="Pointer" class="img-responsive" />
+									</div>
+									<!-- Title -->
+									<h2 class="section-title color-grey" style="font-size:4rem;"><span class="text-extrabold">Functionalitati</span></h2>
+									<!-- Shape Down Arrow -->
+									<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
+									<!-- Description -->
+									<span class="section-msg text-center color-grey">Cu ajutorul unui black-box non intrusiv instalat in interiorul masinii GoDrive CarBox poate comanda functionalități ale mașinii,
+										iar sistemul de tip Cloud Computing colectează asincron, cu minim de întârzieri față de timpul real, datele din autovehicul.</span>
+
+									<div class="container features-right-grid" style="margin-left: 15px;">
+										<!-- First Row Begins -->
+										<div class="row">
+											<!-- Column 1 Begins -->
+											<div class="col-sm-6 text-right">
+												<div class="features-grid gk-divider">
+													<!-- Icon -->
+													<span class="simple-icon icon-pencil color-yellow"></span>
+													<!-- Title -->
+													<h4 class="text-uppercase grid-title text-bold color-grey">Cloud</h4>
+													<!-- Content -->
+													<p>Evaluează datele inregistrate în timp real, în mediul de tip cloud- computing</p>
+												</div>
+												<!-- Horizontal Line -->
+												<hr class="features-line" />
+											</div><!-- Column 1 Ends -->
+											<!-- Column 2 Begins -->
+											<div class="col-sm-6">
+												<div class="features-grid" >
+													<!-- Icon -->
+													<span class="simple-icon icon-magnifier color-yellow"></span>
+													<!-- Title -->
+													<h4 class="text-uppercase grid-title text-bold color-grey">Administrare mobila</h4>
+													<!-- Content -->
+													<p>Oferă acces bidirecțional prin dispozitive mobile de tip inteligent (smartphone, tabletă, laptop, etc)</p>
+												</div>
+												<!-- Horizontal Line -->
+												<hr class="features-line" />
+											</div><!-- Column 2 Ends -->
+										</div><!-- First Row Ends -->
+
+										<!-- Second Row Begins -->
+										<div class="row">
+											<!-- Column 1 Begins -->
+											<div class="col-sm-6 text-right">
+												<div class="features-grid gk-divider">
+
+												</div>
+											</div><!-- Column 1 Ends -->
+											<!-- Column 2 Begins -->
+											<div class="col-sm-6">
+												<div class="features-grid">
+													<!-- Icon -->
+													<span class="simple-icon icon-paper-clip color-yellow"></span>
+													<!-- Title -->
+													<h4 class="text-uppercase grid-title text-bold color-grey">Comunicator GPRS</h4>
+													<!-- Content -->
+													<p>Comunicator GPRS</p>
+												</div>
+											</div><!-- Column 2 Ends -->
+										</div><!-- Second Row Ends -->
+
+										<!-- Third Row Begins -->
+										<div class="row">
+											<!-- Column 1 Begins -->
+											<div class="col-sm-6 text-right">
+												<div class="features-grid gk-divider">
+
+												</div>
+											</div><!-- Column 1 Ends -->
+											<!-- Column 2 Begins -->
+											<div class="col-sm-6">
+												<div class="features-grid">
+													<!-- Icon -->
+													<span class="simple-icon icon-camera color-yellow"></span>
+													<!-- Title -->
+													<h4 class="text-uppercase grid-title text-bold color-grey">Internet of Things</h4>
+													<!-- Content -->
+													<p>Este interconectat cu sisteme externe, în vederea distribuirii și folosirii în comun a informațiilor.</p>
+												</div>
+											</div><!-- Column 2 Ends -->
+										</div><!-- Second Row Ends -->
+									</div>
+								</div><!-- Features Right Info Ends -->
+							</div>
+							<!-- Features Image Row Begins -->
+							<div class="row">
+								<div class="col-sm-12 ipad-shot-wrapper animated" data-animation="fadeIn" data-animation-delay="600">
+									<img src="{% static 'api/erik_assets/images/how-it-works.png' %}" class="img-responsive" alt="Cum functioneaza" />
+								</div>
+							</div><!-- Features Image Row Ends -->
+						</div>
+					</div><!-- Features Section Ends -->
+				</div><!-- Shape 1 Color Ends -->
+				<!-- Services Section Begins -->
+				<div id="services" class="app-services-section app-section-padding index-big relative">
+					<div class="container relative">
+						<!-- Services Top Row Begins -->
+						<div class="row">
+							<!-- Services Right Info Begins -->
+							<div class="col-lg-7 col-md-8 pull-right animated" data-animation="fadeInRight" data-animation-delay="500">
+								<!-- Title -->
+								<h2 class="section-title color-white"><span class="text-extrabold">Servicii</span> Deosebite</h2>
+								<!-- Shape Down Arrow -->
+								<p class="text-center color-white"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
+								<!-- Description -->
+								<h3 class="section-msg text-center color-white">GoDrive Carbox - Tipuri de abonamente</h3>
+							</div><!-- Services Right Info Ends -->
+						</div><!-- Services Top Row Ends -->
+						<!-- Shape Pointer -->
+						<div class="gk-pointer-features gk-app-left-down-arrow animated" data-animation="fadeIn" data-animation-delay="900">
+							<img src="{% static 'api/erik_assets/images/down-left-arrow-icon.png' %}" alt="Pointer" class="img-responsive" />
+						</div>
+					</div>
+					<!-- Services Slider Begins -->
+					<div class="container awesome-container">
+						<!-- Services Bottom Row Begins -->
+						<div class="row">
+							<div class="col-xs-12 animated" data-animation="fadeInUp" data-animation-delay="800">
+								<div id="awesome-services" class="owl-carousel app-carousel-slider">
+									<!-- Item 1 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-cloud-upload color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">DATA STORAGE</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+									<!-- Item 2 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-shield color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">SECURITY</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+									<!-- Item 3 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-calendar color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">EVENTS &amp; COUNTERS</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+									<!-- Item 4 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-cloud-upload color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">DATA STORAGE</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+									<!-- Item 5 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-shield color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">SECURITY</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+									<!-- Item 6 -->
+									<div class="awesome-services text-center">
+										<!-- Icon -->
+										<span class="simple-icon icon-calendar color-yellow"></span>
+										<!-- Title -->
+										<h3 class="color-grey text-uppercase text-bold">EVENTS &amp; COUNTERS</h3>
+										<!-- Content -->
+										<p class="big-text">Ut labores laoreet petentium vix. Nec cu eripuit alterum, vel cibo laoreeem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus  amet m.</p>
+									</div>
+								</div>
+							</div>
+						</div><!-- Services Bottom Row Ends -->
+					</div>
+				</div><!-- Services Section Ends -->
+			</div>
+            <!-- Shape 1 Container Ends -->
+
+
+
+				</div><!-- Shape 2 Color Ends -->
+            <!-- Shape 2 Container Ends -->
+            <style>
+                ::placeholder   {
+                    color: black !important;
+                }
+            </style>
+					<!-- Contact Section Begins -->
+					<div id="contact-us" class="contact-section section-padding index-big relative">
+						<div class="container">
+							<div class="row">
+								<!-- Contact Left Info Begins -->
+								<div class="col-md-6 animated" data-animation="fadeInLeft" data-animation-delay="500">
+									<!-- Title -->
+									<h2 class="section-title color-grey"><span class="text-extrabold">Contact</span></h2>
+									<!-- Shape Down Arrow -->
+									<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
+									<!-- Description -->
+									<h3 class="section-msg text-center color-grey">Scrie-ne un mesaj</h3>
+
+									<!-- Contact Form Container Begins -->
+									<p class="gk-form-message"></p>
+									<div class="gk-contact-form container animated" data-animation="fadeInUp" data-animation-delay="900">
+										<!-- Form Begins -->
+										<form role="form" name="contactform" class="form-horizontal" id="contactform" method="post" action="process.php">
+											<div class="row">
+												<div class="col-sm-12 col-md-12">
+													<div class="container">
+														<div class="row">
+															<!-- Input: Name -->
+															<div class="col-md-6 form-group gk-input-text">
+																<input type="text" name="contact_name" class="input-name form-control" placeholder="Nume" required>
+															</div>
+															<!-- Input: Email -->
+															<div class="col-md-6 form-group gk-email pull-right">
+																<input type="email" name="contact_email" class="input-email form-control email" placeholder="Email" required>
+															</div>
+															<!-- Input: Telefon -->
+															<div class="col-md-6 form-group gk-input-text">
+																<input type="text" name="contact_name" class="input-name form-control" placeholder="Phone" required>
+															</div>
+
+															<!-- Input: Company -->
+															<div class="col-md-6 form-group gk-input-text pull-right">
+																<select name="contact_company" class="input-name form-control" name="Companie"  style="color: black;" required>
+																	<option value="companie" selected>Companie</option>
+																	<option value="Mediu scolar">Mediu scolar</option>
+																	<option value="Utilizator privat">Utilizator privat</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<!-- Input: Textarea -->
+														<div class="col-lg-9 col-md-9 gk-textarea-message">
+															<textarea name="contact_message" class="textarea-message form-control" rows="4" cols="45" placeholder="Mesaj" style="color: white; text-transform: none; width: 470px;"></textarea>
+														</div>
+													</div>
+													<!-- Submit Button -->
+													<div class="gk-input-submit submit">
+														<button type="submit" class="btn gk-submit">Trimite mesaj</button>
+													</div>
+												</div>
+											</div>
+										</form><!-- Form Ends -->
+									</div><!-- Contact Form Container Ends -->
+								</div><!-- Contact Left Info Ends -->
+
+							</div>
+						</div>
+					</div><!-- Contact Section Ends -->
+
+		</section>
+        <!-- Layout Ends -->
+
+		<!-- Footer Begins -->
+		<div id="footer" class="footer-section">
+			<div class="footer-bg">
+				<div class="container">
+					<div class="row">
+						<!-- Footer Content -->
+						<div class="center-block">
+							<p class="text-center">&copy;
+Pentru informaţii detaliate despre celelalte programe cofinanţate de Uniunea Europeană, vă invităm să vizitaţi <a href="https://www.fonduri-ue.ro">www.fonduri-ue.ro</a> Conţinutul acestui material nu reprezintă în mod obligatoriu poziţia oficială a Uniunii Europene sau a Guvernului României.
+								<span class="footer-social-icon">
+									<a href="#" class="gk-facebook"><i class="fa fa-facebook"></i></a>
+									<a href="#" class="gk-twitter"><i class="fa fa-twitter"></i></a>
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!-- Footer Ends -->
+
+	</div><!-- Wrapper Ends -->
+
+
+
+
+	<!-- Script Begins -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery-1.11.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/bootstrap.min.js' %}"></script>
+	<!-- Form Validation -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/bootstrapValidator.min.js' %}"></script>
+	<!-- Sticky Header -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery.sticky.js' %}"></script>
+	<!-- Carousel Slider -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/carousel.min.js' %}"></script>
+	<!-- Animation and Counter -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery.easing.1.3.js' %}"></script>
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery.appear.js' %}"></script>
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery.countTo.js' %}"></script>
+	<!-- Simple Line Icons Font -->
+	<!--[if lte IE 7]><script src="js/icons-lte-ie7.js"></script><![endif]-->
+	<!-- Video -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/jquery.mb.YTPlayer.js' %}"></script>
+	<!-- Custom -->
+	<script type="text/javascript" src="{% static 'api/erik_assets/js/custom.js' %}"></script>
+	<!-- Script Ends -->
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> 
+<link rel="stylesheet" href="{% static 'api/icofont/css/icofont.css' %}">
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+<script>
+  function clear_cars() {
+
+    ul_cars_list = document.getElementById("ul_cars");
+
+    while (ul_cars_list.firstChild) 
+      ul_cars_list.removeChild(ul_cars_list.firstChild);
+  }
+</script>
+
+<script>
+  function clear_codes() {
+
+    ul_codes_list = document.getElementById("ul_codes");
+
+    while (ul_codes_list.firstChild) 
+      ul_codes_list.removeChild(ul_codes_list.firstChild);
+  }
+</script>
+
+<script>
+  function clear_all() {
+
+    clear_cars();
+    clear_codes();
+  }
+</script>
+
+<script>
+    function yesnoCheck(that) {
+        if (that.value == "BarPlot" || that.value == "LinePlot") {
+            $('#groupdatesby').show();
+        } else {
+            $('#groupdatesby').hide();
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var datefield=document.createElement("input")
+    datefield.setAttribute("type", "date")
+    if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+        document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
+    }
+</script>
+
+<script>
+if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
+    jQuery(function($){ //on document.ready
+        $('#start_date').datepicker();
+        $('#end_date').datepicker();
+    })
+}
+</script>
+
+ 
+<script>
+  $(document).ready(function() {
+    $("#start_date").datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("setDate", -30);
+    $("#end_date").datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("setDate", new Date());
+  });
+</script>
+
+<script>
+  function fillAccountField(that) {
+    $("#AccountID").val(that.id);
+
+    clear_cars();
+
+    var matrix = [
+    {% for row in cars_list %}
+        [{% for cell in row %}{{ cell }},{% endfor %}],
+    {% endfor %}
+    ];
+
+    ul_cars_list = document.getElementById("ul_cars");
+    for(i=0; i < matrix[0].length; i++){
+      id_car = matrix[that.id][i];
+
+      if (id_car != -1) {
+        var item = document.createElement('li');
+        item.setAttribute("id", id_car);
+        item.appendChild(document.createTextNode(id_car));
+
+        item.onclick = function () {
+          $("#CarID").val(this.id);
+        }
+        
+        ul_cars_list.appendChild(item);
+      }
+    }
+  }
+</script>
+
+<script>
+  function fillCodeField(that) {
+    $("#Code").val(that.id);
+  }
+</script>
+
+<style>
+
+h2 {
+  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+li:last-child {
+  border: none;
+}
+
+li {
+  text-decoration: none;
+  color: #000;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+  width: 200px;
+}
+
+li:hover {
+  #font-size: 30px;
+  background: #ADD8E6;
+}
+
+nav ul{height:200px;}
+nav ul{overflow:hidden; overflow-y:scroll;}
+
+header
+{
+	font-family: 'Lobster', cursive;
+	text-align: center;
+	font-size: 25px;	
+}
+
+#info
+{
+	font-size: 18px;
+	color: #555;
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+a{
+	color: #074E8C;
+}
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+  width: 240px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+#wrapper
+{
+	text-align: center;
+	width: 450px;
+	margin: auto;
+}
+
+#style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+</style>
+</head>
+ 
+<body>
+
+
+<table>
+<tr>
+
+<td id="td_account" onclick="document.getElementById('td_car').style.visibility='visible'; document.getElementById('td_code').style.visibility='hidden'">
+<div>
+
+   <h2><span class="label label-info">Alegeti flota</span></h2>
+ 
+  <div class="scrollbar" id="style-1">
+  <ul id="ul_accounts">
+    {% for row in account_list %}
+        <li id="{{ row.0 }}" onclick="fillAccountField(this);">{{ row.2 }}</li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+</td>
+
+<!--
+  <li id="1">Zurich</li>
+    <li id="2">Geneva</li>
+    <li id="3">Winterthur</li>
+    <li id="4">Lausanne</li>
+    <li id="5">Lucerne</li>
+    <li id="1">Zurich</li>
+    <li id="2">Geneva</li>
+    <li id="3">Winterthur</li>
+    <li id="4">Lausanne</li>
+    <li id="5">Lucerne</li>
+    <li id="1">Zurich</li>
+    <li id="2">Geneva</li>
+    <li id="3">Winterthur</li>
+    <li id="4">Lausanne</li>
+    <li id="5">Lucerne</li>
+
+    <li id="1" onclick="fillCarField(this);">Zurich</li>
+    <li id="2" onclick="fillCarField(this);">Geneva</li>
+    <li id="3" onclick="fillCarField(this);">Winterthur</li>
+    <li id="4" onclick="fillCarField(this);">Lausanne</li>
+    <li id="5" onclick="fillCarField(this);">Lucerne</li>
+-->
+ 
+<td id="td_car" style="visibility: hidden" onclick="document.getElementById('td_code').style.visibility='visible'">
+<div>
+  <h2><span class="label label-info">Alegeti masina</span></h2>
+  <div class="scrollbar" id="style-1">
+  <ul id="ul_cars">
+  </ul>
+  </div>
+</div>
+</td>
+
+<td id="td_code" style="visibility: hidden">
+<div>
+  <h2><span class="label label-info">Alegeti parametrul</span></h2>
+  <div class="scrollbar" id="style-1">
+  <ul id="ul_codes">
+    {% for row in codes_list %}
+        <li id="{{ row.3 }}" onclick="fillCodeField(this);">{{ row.6 }}</li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+</td>
+
+</tr>
+</table>
+
+<form action="/test/" method="post">
+    <input id="CarID" name="CarID" type="text" placeholder="You can fill a CarID" class="form-control input-md">
+    <input id="Code" name="Code" type="text" placeholder="You can fill a Code" class="form-control input-md">
+    <input id="start_date" name="start_date" size="20" />
+    <input id="end_date" name="end_date" size="20" />
+    <input id="AccountID" name="AccountID" />
+    <select id="charttype" name="charttype" onchange="yesnoCheck(this);">
+      <optgroup label="Choose Chart Type">
+        <option value="BarPlot">Bar Plot</option>
+        <option value="LinePlot">Line Plot</option>
+        <option value="Histograma">Histogram</option>
+        <option value="RealTime">Real Time</option>
+      </optgroup>
+    </select>
+
+    <select id="groupdatesby" name="groupdatesby">
+      <optgroup label="Aggregate dates by">
+        <option value="D">Days</option>
+        <option value="W">Weeks</option>
+        <option value="M">Months</option>
+        <option value="A">Years</option>
+      </optgroup>
+    </select>
+    <button id="submit" name="submit" class="btn btn-primary">Search</button></p>
+</form>
+
+
+<div class="list-group">
+            <a href="/barchart/" class="list-group-item list-group-item-action" target="_blank"><i class="icofont icofont-chart-bar-graph"></i>
+ <font size="5">Vizualizare date sub forma de Bar Plot</font></a>
+
+ <!-- 
+  <i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i>
+-->
+
+            <a href="/piechart/" class="list-group-item list-group-item-action" target="_blank"><i height="420" class="icofont icofont-chart-line"></i>
+ <font size="5">Vizualizare date sub forma de Line Plot</font></a>
+
+            <a href="/piechart/" class="list-group-item list-group-item-action" target="_blank"><i class="icofont icofont-chart-histogram"></i>
+ <font size="5">Vizualizare date sub forma de Histograma</font></a>
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,55 @@
+[GMqtt1][2017-12-22 12:46:15] Received mesage:
+[GMqtt1][2017-12-22 12:46:15]    User Data: None
+[GMqtt1][2017-12-22 12:46:15]    Topic: Car_fleet/11111111111111111/1/04/
+[GMqtt1][2017-12-22 12:46:15]    Message: b'33'
+[GMqtt1][2017-12-22 12:46:15]    Retain: 1
+[GMqtt1][2017-12-22 12:46:15] Received mesage:
+[GMqtt1][2017-12-22 12:46:15]    User Data: None
+[GMqtt1][2017-12-22 12:46:15]    Topic: Car_fleet/11111111111111111/1/05/
+[GMqtt1][2017-12-22 12:46:15]    Message: b'77'
+[GMqtt1][2017-12-22 12:46:15]    Retain: 1
+[GMqtt1][2017-12-22 12:46:15] Received mesage:
+[GMqtt1][2017-12-22 12:46:15]    User Data: None
+[GMqtt1][2017-12-22 12:46:15]    Topic: Car_fleet/11111111111111111/1/0B/
+[GMqtt1][2017-12-22 12:46:15]    Message: b'66'
+[GMqtt1][2017-12-22 12:46:15]    Retain: 1
+[GMqtt1][2017-12-22 12:46:15] Received mesage:
+[GMqtt1][2017-12-22 12:46:15]    User Data: None
+[GMqtt1][2017-12-22 12:46:15]    Topic: Car_fleet/11111111111111111/1/0C/
+[GMqtt1][2017-12-22 12:46:15]    Message: b'0000'
+[GMqtt1][2017-12-22 12:46:15]    Retain: 1
+[GMqtt1][2017-12-22 12:46:15] Received mesage:
+[GMqtt1][2017-12-22 12:46:15]    User Data: None
+[GMqtt1][2017-12-22 12:46:16]    Topic: Car_fleet/11111111111111111/1/0D/
+[GMqtt1][2017-12-22 12:46:16]    Message: b'00'
+[GMqtt1][2017-12-22 12:46:16]    Retain: 1
+[GMqtt1][2017-12-22 12:46:16] Received mesage:
+[GMqtt1][2017-12-22 12:46:16]    User Data: None
+[GMqtt1][2017-12-22 12:46:16]    Topic: Car_fleet/11111111111111111/1/0F/
+[GMqtt1][2017-12-22 12:46:16]    Message: b'3D'
+[GMqtt1][2017-12-22 12:46:16]    Retain: 1
+[GMqtt1][2017-12-22 12:46:16] Received mesage:
+[GMqtt1][2017-12-22 12:46:16]    User Data: None
+[GMqtt1][2017-12-22 12:46:16]    Topic: Car_fleet/11111111111111111/1/10/
+[GMqtt1][2017-12-22 12:46:16]    Message: b'01DB'
+[GMqtt1][2017-12-22 12:46:16]    Retain: 1
+[GMqtt1][2017-12-22 12:46:16] Received mesage:
+[GMqtt1][2017-12-22 12:46:17]    User Data: None
+[GMqtt1][2017-12-22 12:46:17]    Topic: Car_fleet/11111111111111111/1/11/
+[GMqtt1][2017-12-22 12:46:17]    Message: b'E5'
+[GMqtt1][2017-12-22 12:46:17]    Retain: 1
+[GMqtt1][2017-12-22 12:46:17] Received mesage:
+[GMqtt1][2017-12-22 12:46:17]    User Data: None
+[GMqtt1][2017-12-22 12:46:17]    Topic: Car_fleet/11111111111111111/1/13/
+[GMqtt1][2017-12-22 12:46:17]    Message: b'00'
+[GMqtt1][2017-12-22 12:46:17]    Retain: 1
+[GMqtt1][2017-12-22 12:46:17] Received mesage:
+[GMqtt1][2017-12-22 12:46:17]    User Data: None
+[GMqtt1][2017-12-22 12:46:17]    Topic: Car_fleet/11111111111111111/1/23/
+[GMqtt1][2017-12-22 12:46:17]    Message: b'00A0'
+[GMqtt1][2017-12-22 12:46:17]    Retain: 1
+[GMqtt1][2017-12-22 12:46:17] Received mesage:
+[GMqtt1][2017-12-22 12:46:17]    User Data: None
+[GMqtt1][2017-12-22 12:46:17]    Topic: Car_fleet/11111111111111111/1/30/
+[GMqtt1][2017-12-22 12:46:17]    Message: b'FF'
+[GMqtt1][2017-12-22 12:46:17]    Retain: 1

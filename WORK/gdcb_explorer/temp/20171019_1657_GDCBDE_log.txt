@@ -1,0 +1,5 @@
+[GDCBDE][2017-10-19 16:57:24] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-10-19 16:57:26] [SQLHLP] Creating data folder:/GoogleDrive/_godrive_data\db_cache
+[GDCBDE][2017-10-19 16:57:26] [SQLHLP] ODBC Conn: DRIVER={ODBC Driver 13 for SQL Serv...
+[GDCBDE][2017-10-19 16:57:26] [SQLHLP] FAILED ODBC Conn!
+[GDCBDE][2017-10-19 16:57:26] [SQLHLP] ERROR: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')

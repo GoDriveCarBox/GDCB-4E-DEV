@@ -16,7 +16,7 @@
 	"VIEW_ALLDATA": "vw_getdata",
 
 	"RAW_IGNR_FIELD": "ID",
-	"RAW_NVAL_FIELD": "IntValue",
+	"RAW_NVAL_FIELD": "Value",
 	"RAW_SVAL_FIELD": "StrValue",
 	"RAW_CODE_FIELD": "CodeID",
 	"RAW_TIME_FIELD": "TimeStamp",

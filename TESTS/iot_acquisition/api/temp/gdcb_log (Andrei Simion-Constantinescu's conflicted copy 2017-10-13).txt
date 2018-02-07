@@ -1,0 +1,5 @@
+[GDCBDE][2017-10-13 12:49:51] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-10-13 12:49:51] [SQLHLP] Using data folder:...uisition/api/_godrive_data/db_cache
+[GDCBDE][2017-10-13 12:49:51] [SQLHLP] ODBC Conn: DRIVER={/usr/local/lib/libmsodbcsql...
+[GDCBDE][2017-10-13 12:49:52] [SQLHLP] FAILED ODBC Conn!
+[GDCBDE][2017-10-13 12:49:52] [SQLHLP] ERROR: ('01000', "[01000] [unixODBC][Driver Manager]Can't open lib '/usr/local/lib/libmsodbcsql.13.dylib' : file not found (0) (SQLDriverConnect)")

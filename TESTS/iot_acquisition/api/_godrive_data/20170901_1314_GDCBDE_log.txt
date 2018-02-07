@@ -1,0 +1,30 @@
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Using data folder:...uisition/api/_godrive_data/db_cache
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] ODBC Conn: DRIVER={ODBC Driver 13 for SQL Serv...
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Connection created on carbox.database.windows.net
+[GDCBDE][2017-09-01 13:14:39] LOGfile: /var/www/iot_acquisition/api/_
+[GDCBDE][2017-09-01 13:14:39] Work folder: [/var/www/iot_acquisition/api/_godrive_data]
+[GDCBDE][2017-09-01 13:14:39] INIT DATA EXPLORER v0.1.1
+[GDCBDE][2017-09-01 13:14:39] 20170901_1314_
+[GDCBDE][2017-09-01 13:14:39] __name__: api.gdcb_explore
+[GDCBDE][2017-09-01 13:14:39] __file__: /var/www/iot_acquisition/api/gdcb_explore.py
+[GDCBDE][2017-09-01 13:14:39] Setup predictors and raw data repo...
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Loading file [..ata/db_cache/SELECT_FROM_Codes_.csv] ...
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Dataset loaded: 0.01MB in 0.0s(0.0m) 134 rows
+[GDCBDE][2017-09-01 13:14:39] Loaded 134 predictors
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Downloading data [SELECT TOP (1) * FROM [RawData..] ...
+[GDCBDE][2017-09-01 13:14:39] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 1 rows
+[GDCBDE][2017-09-01 13:14:40] RawData: ['CarID', 'CodeID', 'StrValue', 'IntValue', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Loading file [..data/db_cache/SELECT_FROM_Cars_.csv] ...
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 56 rows
+[GDCBDE][2017-09-01 13:14:40] Loaded 56 cars
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Loading file [..a/db_cache/SELECT_FROM_RawData_.csv] ...
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Dataset loaded: 0.99MB in 0.0s(0.0m) 16182 rows
+[GDCBDE][2017-09-01 13:14:40] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'IntValue', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-09-01 13:14:40] Done data preparation.
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Downloading data [SELECT * FROM CarsXCodes_v2 as..] ...
+[GDCBDE][2017-09-01 13:14:40] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 1 rows
+[GDCBDE][2017-09-01 13:14:46] Saving raw data ...
+[GDCBDE][2017-09-01 13:14:46] [SQLHLP] SAVING TABLE [APPEND](1,000 records 0.06MB)...
+[GDCBDE][2017-09-01 13:14:46] [SQLHLP] ERROR: (pyodbc.IntegrityError) ('23000', "[23000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Cannot insert the value NULL into column 'CarID', table 'Carbox.dbo.RawData'; column does not allow nulls. INSERT fails. (515) (SQLExecDirectW)") [SQL: 'INSERT INTO [RawData] ([CarID], [CodeID], [StrValue], [IntValue], [ViewVal], [ViewStr], [TimeStamp]) VALUES (?, ?, ?, ?, ?, ?, ?)'] [parameters: ((None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None)  ... displaying 10 of 1000 total bound parameter sets ...  (None, 1004.0, '0x12ae', 4782.0, None, None, None), (None, 1004.0, '0x12ae', 4782.0, None, None, None))]
+[GDCBDE][2017-09-01 13:14:46] Done saving raw data.

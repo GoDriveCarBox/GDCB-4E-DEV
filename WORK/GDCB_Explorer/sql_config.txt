@@ -4,5 +4,5 @@
 	"username" : "carbox@carbox",
 	"password" : "GDCBnpsf0517",
 	"driver" : "{ODBC Driver 13 for SQL Server}",
-	"datafolder" : "d:/GoogleDrive/_godrive_data"
+	"datafolder" : "d:/gdrive/_godrive_data"
 }

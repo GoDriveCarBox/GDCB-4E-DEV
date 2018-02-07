@@ -1,0 +1,104 @@
+{% load static %}
+
+<head>
+	<title> Raw Data </title>
+	<link rel="stylesheet" href="{% static 'api/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'api/css/dataTables.bootstrap.min.css' %}">
+	<style>
+.row-CarID {
+	width: 5%;
+}
+
+.row-Code {
+        width: 10%;
+}
+
+.row-Description {
+        width: 35%;
+}
+
+.row-IntValue {
+        width: 10%;
+}
+
+.row-ViewStr {
+        width: 15%;
+}
+
+.row-TimeStamp {
+        width: 25%;
+}
+</style>
+</head>
+
+{% load el_pagination_tags %}
+{% paginate 15 entry_list %} {% get_pages %}
+<div class="container" style="margin-top:35px">
+	<h1>RawData Search Results</h1>
+	<a href="http://gdcb.westeurope.cloudapp.azure.com/show/">
+   		<button class="btn btn-primary">Go back to show page</button>
+	</a>
+	<br><br>
+	<table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th class="row-CarID">CarID</th>
+					<th class="row-Code">Code</th>
+					<th class="row-Description">Description</th>
+					<th class="row-IntValue">IntValue</th>
+					<th class="row-ViewStr">ViewStr</th>
+					<th class="row-TimeStamp">TimeStamp</th>
+				</tr>
+			</thead>
+			<tbody>
+         {% for row in entry_list %}
+    		<tr>
+               <td>{{ row.1 }}</td>
+               <td>{{ row.9 }}</td>
+               <td>{{ row.8 }}</td>
+               <td>{{ row.4 }}</td>
+               <td>{{ row.6 }}</td>
+               <td>{{ row.7 }}</td>
+           </tr>
+				{% endfor %}
+       </tbody>
+
+		</table>
+		
+		Showing entries
+		{{ pages.current_start_index }}-{{ pages.current_end_index }} of
+		{{ pages.total_count }}.
+		<br>
+		{{ pages }}
+
+<br><br>
+<form class="form-horizontal" action="/search/" method="post">
+<fieldset>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="CarID">CarID</label>  
+  <div class="col-md-4">
+  <input id="CarID" name="CarID" type="text" placeholder="You can fill a CarID" class="form-control input-md">
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Code">Code</label>  
+  <div class="col-md-4">
+  <input id="Code" name="Code" type="text" placeholder="You can fill a Code" class="form-control input-md">
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+    <button id="submit" name="submit" class="btn btn-primary">Search</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+</div>
+</div>

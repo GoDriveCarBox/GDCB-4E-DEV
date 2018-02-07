@@ -248,6 +248,13 @@ class GDCBExplorer:
       while not (self.df_predictors.loc[n,self.active_field]):
         n = np.random.randint(0,nr_codes)
         
+      if i % 3 == 0:
+        n = 12
+      elif i % 3 == 1:
+        n = 5
+      else:
+        n = 4
+        
       s_code = self.df_predictors.loc[n,self.code_field]       
       min_val = float(self.df_predictors.loc[n,self.min_field])
       max_val = float(self.df_predictors.loc[n,self.max_field])  
@@ -261,10 +268,13 @@ class GDCBExplorer:
       val = car_components[s_code].GetValue()
       
       nval = int((val - add_val) / mul_val)
+      #nval = (val - add_val) / mul_val
+
 
       nowtime = dt.now()
       strnowtime = nowtime.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
       sb16val = hex(nval)
+      #sb16val = hex(int(nval))
 
       self.df_rawdata.loc[i,self.raw_code_field] = str(s_code)
       self.df_rawdata.loc[i,self.raw_nval_field] = nval
@@ -287,8 +297,9 @@ class GDCBExplorer:
                  sample_size))
     t0 = tm.time()
     for i in range(nr_samples):
-      c = np.random.randint(0, self.df_cars.shape[0])
-      carid = self.df_cars.iloc[c,0] 
+      #c = np.random.randint(0, self.df_cars.shape[0])
+      #carid = self.df_cars.iloc[c,0] 
+      carid = 53
       self._logger("Sampling {}/{} for car:{}".format(i,nr_samples,carid))
       self.SampleRaw(sample_size = sample_size, car_id = carid)
     t1 = tm.time()
@@ -346,7 +357,7 @@ if __name__ =="__main__":
     del explorer
   
   explorer = GDCBExplorer()    
-  explorer.SampleRange(2,100)
+  explorer.SampleRange(1,120)
   #explorer.TelemetryStatistics()
   
     

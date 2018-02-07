@@ -1,0 +1,9 @@
+{
+  "BASE_FOLDER": "GoogleDrive",
+  "APP_FOLDER": "_godrive_data\_webserver",
+  "server" : "carbox.database.windows.net",
+  "database" : "Carbox",
+  "username" : "carbox@carbox",
+  "password" : "GDCBnpsf0517",
+  "driver" : "{ODBC Driver 13 for SQL Server}"
+}

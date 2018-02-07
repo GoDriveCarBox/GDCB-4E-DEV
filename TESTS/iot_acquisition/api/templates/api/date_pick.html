@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+    var datefield=document.createElement("input")
+    datefield.setAttribute("type", "date")
+    if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+        document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
+    }
+</script>
+
+<script>
+    function yesnoCheck(that) {
+        if (that.value == "bar") {
+            $('#groupdatesby').show();
+        } else {
+            $('#groupdatesby').hide();
+        }
+    }
+</script>
+ 
+<script>
+if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
+    jQuery(function($){ //on document.ready
+        $('#start_date').datepicker();
+        $('#end_date').datepicker();
+    })
+}
+</script>
+</head>
+ 
+<body>
+<form action="/test/" method="post">
+    <input id="CarID" name="CarID" type="text" placeholder="You can fill a CarID" class="form-control input-md">
+    <input id="Code" name="Code" type="text" placeholder="You can fill a Code" class="form-control input-md">
+    <input type="date" id="start_date" name="start_date" size="20" />
+    <input type="date" id="end_date" name="end_date" size="20" />
+    <select id="charttype" name="charttype" onchange="yesnoCheck(this);">
+      <optgroup label="Choose Chart Type">
+        <option value="bar">Bar Plot</option>
+        <option value="line">Line Plot</option>
+        <option value="hist">Histogram</option>
+        <option value="real">Real Time</option>
+      </optgroup>
+    </select>
+
+    <select id="groupdatesby" name="groupdatesby">
+      <optgroup label="Aggregate dates by">
+        <option value="D">Days</option>
+        <option value="W">Weeks</option>
+        <option value="M">Months</option>
+        <option value="A">Years</option>
+      </optgroup>
+    </select>
+    <button id="submit" name="submit" class="btn btn-primary">Search</button></p>
+</form>
+</body>
+</html>

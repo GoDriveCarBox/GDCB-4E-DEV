@@ -1,0 +1,14 @@
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] Using data folder:...uisition\api\_godrive_data\db_cache
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] ODBC Conn: DRIVER={/usr/local/lib/libmsodbcsql...
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] FAILED ODBC Conn!
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] ERROR: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+[GDCBDE][2017-10-23 11:36:35] LOGfile: C:\Users\AndreiS\Dropbox\21. G
+[GDCBDE][2017-10-23 11:36:35] Work folder: [C:\Users\AndreiS\Dropbox\21. GODRIVE_WORK\01_work\WORK\iot_acquisition\api\_godrive_data]
+[GDCBDE][2017-10-23 11:36:35] INIT DATA EXPLORER v0.1.1
+[GDCBDE][2017-10-23 11:36:35] Setup predictors and raw data repo...
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] Loading file [..ata\db_cache\SELECT_FROM_Codes_.csv] ...
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] Dataset loaded: 0.01MB in 0.0s(0.0m) 134 rows
+[GDCBDE][2017-10-23 11:36:35] Loaded 134 predictors
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] Downloading data [SELECT TOP (1) * FROM [RawData..] ...
+[GDCBDE][2017-10-23 11:36:35] [SQLHLP] ERROR: 'MSSQLHelper' object has no attribute 'conn'

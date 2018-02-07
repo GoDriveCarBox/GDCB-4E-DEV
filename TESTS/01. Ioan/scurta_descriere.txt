@@ -1,0 +1,4 @@
+Am construit o pagina "TestPage" in care am adaugat un label, un input si un buton.
+-> la apasarea butonului imi afiseaza temperatura din orasul tiparit in textbox intr-o alta pagina.
+-> verificarea daca exista orasul sau nu este facuta pe json-ul primit in cazul in care orasul nu este gasit
+(imi returneaza un dictionar de lungime 2 cu codul erorii si un mesaj)

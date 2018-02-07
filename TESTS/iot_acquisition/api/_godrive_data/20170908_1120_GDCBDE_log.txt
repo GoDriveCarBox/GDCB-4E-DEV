@@ -1,0 +1,92 @@
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Using data folder:...uisition/api/_godrive_data/db_cache
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] ODBC Conn: DRIVER={ODBC Driver 13 for SQL Serv...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Connection created on carbox.database.windows.net
+[GDCBDE][2017-09-08 11:20:17] LOGfile: /var/www/iot_acquisition/api/_
+[GDCBDE][2017-09-08 11:20:17] Work folder: [/var/www/iot_acquisition/api/_godrive_data]
+[GDCBDE][2017-09-08 11:20:17] INIT DATA EXPLORER v0.1.1
+[GDCBDE][2017-09-08 11:20:17] Setup predictors and raw data repo...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Loading file [..ata/db_cache/SELECT_FROM_Codes_.csv] ...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Dataset loaded: 0.01MB in 0.0s(0.0m) 134 rows
+[GDCBDE][2017-09-08 11:20:17] Loaded 134 predictors
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Downloading data [SELECT TOP (1) * FROM [RawData..] ...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 1 rows
+[GDCBDE][2017-09-08 11:20:17] RawData: ['CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Loading file [..data/db_cache/SELECT_FROM_Cars_.csv] ...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Dataset loaded: 0.00MB in 0.0s(0.0m) 56 rows
+[GDCBDE][2017-09-08 11:20:17] Loaded 56 cars
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Loading file [..a/db_cache/SELECT_FROM_RawData_.csv] ...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Dataset loaded: 0.99MB in 0.0s(0.0m) 16182 rows
+[GDCBDE][2017-09-08 11:20:17] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'IntValue', 'ViewVal', 'ViewStr', 'TimeStamp']
+[GDCBDE][2017-09-08 11:20:17] Done data preparation.
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Downloading data [SELECT * FROM [RawData]..] ...
+[GDCBDE][2017-09-08 11:20:17] [SQLHLP] Dataset loaded: 1.06MB in 0.2s(0.0m) 17354 rows
+[GDCBDE][2017-09-08 11:20:17] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:17] Finished associating columns
+[GDCBDE][2017-09-08 11:20:17] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:22] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:22] Finished associating columns
+[GDCBDE][2017-09-08 11:20:22] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:31] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:31] Finished associating columns
+[GDCBDE][2017-09-08 11:20:31] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:37] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:37] Finished associating columns
+[GDCBDE][2017-09-08 11:20:37] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:45] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:45] Finished associating columns
+[GDCBDE][2017-09-08 11:20:45] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:48] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:48] Finished associating columns
+[GDCBDE][2017-09-08 11:20:48] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:50] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:50] Finished associating columns
+[GDCBDE][2017-09-08 11:20:50] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:20:58] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:20:58] Finished associating columns
+[GDCBDE][2017-09-08 11:20:58] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:05] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:05] Finished associating columns
+[GDCBDE][2017-09-08 11:21:05] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:08] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:08] Finished associating columns
+[GDCBDE][2017-09-08 11:21:08] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:10] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:10] Finished associating columns
+[GDCBDE][2017-09-08 11:21:10] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:13] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:13] Finished associating columns
+[GDCBDE][2017-09-08 11:21:13] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:15] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:15] Finished associating columns
+[GDCBDE][2017-09-08 11:21:15] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:17] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:17] Finished associating columns
+[GDCBDE][2017-09-08 11:21:17] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:19] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:19] Finished associating columns
+[GDCBDE][2017-09-08 11:21:19] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:21] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:21] Finished associating columns
+[GDCBDE][2017-09-08 11:21:21] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:22] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:22] Finished associating columns
+[GDCBDE][2017-09-08 11:21:22] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:25] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:25] Finished associating columns
+[GDCBDE][2017-09-08 11:21:25] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:31] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:31] Finished associating columns
+[GDCBDE][2017-09-08 11:21:31] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:37] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:37] Finished associating columns
+[GDCBDE][2017-09-08 11:21:37] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:40] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:40] Finished associating columns
+[GDCBDE][2017-09-08 11:21:40] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:42] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:42] Finished associating columns
+[GDCBDE][2017-09-08 11:21:42] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']
+[GDCBDE][2017-09-08 11:21:45] ....Trying to associate code and description columns to df_rawdata_toshow
+[GDCBDE][2017-09-08 11:21:45] Finished associating columns
+[GDCBDE][2017-09-08 11:21:45] Rawdata copy: ['ID', 'CarID', 'CodeID', 'StrValue', 'Value', 'ViewVal', 'ViewStr', 'TimeStamp', 'Description', 'Code']

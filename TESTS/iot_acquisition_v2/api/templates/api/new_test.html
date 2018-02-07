@@ -1,0 +1,840 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GoDrive</title>
+
+    <link rel="stylesheet" href="{% static 'api/icofont/css/icofont.css' %}">
+
+    <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+<!--Font Awesome (added because you use icons in your prepend/append)-->
+<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style> 
+
+
+
+<link href="{% static 'api/index_assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'api/index_assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+<!--
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+-->
+
+<!--
+<script>
+    $(document).ready(function(){
+
+    $('#start').datetimepicker({
+      format: "dd/mm/yyyy"
+    }).on('change', function(){
+        $('.datepicker').hide();
+    });
+
+    alert(start);
+
+    $('#end').datepicker({
+      format: "dd/mm/yyyy"
+    }).on('change', function(){
+        $('.datepicker').hide();
+    });
+
+    alert(end);
+
+});
+</script>
+-->
+
+    
+    <!--
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+
+
+<!--
+    <script src="js/jquery-1.7.1.js"></script>  
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+-->
+
+
+<!--
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+-->
+
+    <style>
+
+    h4 {
+      font-family: 'Lobster', cursive;
+      text-align: center;
+      font-size: 25px;  
+    }
+
+    h2 {
+      font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h3
+    {
+      font-family: 'Lobster', cursive;
+      text-align: center;
+      font-size: 40px;  
+    }
+
+
+    ul.ul_scrollbar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li.li_scrollbar {
+      font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    li.li_scrollbar:last-child {
+      border: none;
+    }
+
+    li.li_scrollbar {
+      text-decoration: none;
+      color: #000;
+
+      -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+      -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+      -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+      -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+      transition: font-size 0.3s ease, background-color 0.3s ease;
+      display: block;
+      width: 200px;
+    }
+
+    li.li_scrollbar:hover {
+        #font-size: 30px;
+        background: #ADD8E6;
+    }
+
+    nav ul.ul_scrollbar{height:200px;}
+    nav ul.ul_scrollbar{overflow:hidden; overflow-y:scroll;}
+
+    #submit
+    {    
+        visibility: hidden;
+    }
+
+    #info
+    {
+      font-size: 18px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    a{
+      color: #074E8C;
+    }
+
+    .scrollbar
+    {
+      margin-left: 30px;
+      float: left;
+      height: 300px;
+      background: #F5F5F5;
+      overflow-y: scroll;
+      margin-bottom: 25px;
+      width: 240px;
+    }
+
+    .force-overflow
+    {
+      min-height: 450px;
+    }
+
+    #wrapper
+    {
+      text-align: center;
+      width: 450px;
+      margin: auto;
+    }
+
+    #style-1::-webkit-scrollbar-track
+    {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar
+    {
+      width: 12px;
+      background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar-thumb
+    {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #555;
+    }
+
+</style>
+</head>
+
+<script>
+  function clear_cars() {
+
+    ul_cars_list = document.getElementById("ul_cars");
+
+    while (ul_cars_list.firstChild) 
+      ul_cars_list.removeChild(ul_cars_list.firstChild);
+  }
+</script>
+
+<script>
+  function clear_codes() {
+
+    ul_codes_list = document.getElementById("ul_codes");
+
+    while (ul_codes_list.firstChild) 
+      ul_codes_list.removeChild(ul_codes_list.firstChild);
+  }
+</script>
+
+<script>
+  function clear_all() {
+
+    clear_cars();
+    clear_codes();
+  }
+</script>
+
+<script>
+    function yesnoCheck(that) {
+        if (that.value == "BarPlot" || that.value == "LinePlot") {
+            $('#groupdatesby').show();
+        } else {
+            $('#groupdatesby').hide();
+        }
+    }
+</script>
+
+
+<!--
+<script>
+  $(document).ready(function() {
+    $("#start_date").datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("setDate", -30);
+    $("#end_date").datepicker({ dateFormat: 'yy-mm-dd' }).datepicker("setDate", new Date());
+  });
+</script>
+-->
+
+<script>
+  function fillAccountField(that) {
+    
+    $("#AccountID").val(that.id);
+    document.getElementById("summary").innerHTML = "Ati ales flota " + that.id; 
+
+
+    clear_cars();
+
+    var matrix = [
+    {% for row in cars_list %}
+        [{% for cell in row %}{{ cell }},{% endfor %}],
+    {% endfor %}
+    ];
+
+    ul_cars_list = document.getElementById("ul_cars");
+    for(i=0; i < matrix[0].length; i++){
+      id_car = matrix[that.id][i];
+
+      if (id_car != -1) {
+        var item = document.createElement('li');
+        item.setAttribute("class", "li_scrollbar");
+        item.setAttribute("id", id_car);
+        item.appendChild(document.createTextNode(id_car));
+
+        item.onclick = function () {
+          $("#CarID").val(this.id);
+          document.getElementById("summary").innerHTML = "Ati ales flota " + document.getElementById("AccountID").value +  ", masina " + this.id; 
+        }
+        
+        ul_cars_list.appendChild(item);
+      }
+    }
+  }
+</script>
+
+<script>
+  function fillCodeField(id) {
+    //alert(id)
+    $("#Code").val(id);
+    document.getElementById("summary").innerHTML = "Ati ales flota " + document.getElementById("AccountID").value +  ", masina " + document.getElementById("CarID").value + ", parametrul cu codul " + id;
+  }
+</script>
+
+  <body id="antet">
+<!--
+  <nav class="navbar navbar-dark bg-dark fixed-top" id="mainNav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">GoDrive</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a class="nav-link js-scroll-trigger" href="#about">Selectie parametrii</a></li>
+      <li><a class="nav-link js-scroll-trigger" href="#services">Selectie date</a></li>
+      <li><a class="nav-link js-scroll-trigger" href="#contact">Grafice</a></li>
+    </ul>
+  </div>
+</nav>
+-->
+
+
+    <!-- Navigation -->
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#antet">Go Drive Grafice</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#acasa">Acasa</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">Grafice</a>
+            </li>
+          -->
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#grafice">Grafice</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1>Welcome to GoDrive</h1>
+        <p class="lead"><h4>Selectati flota, masina si codul dorit</h4></p>
+      </div>
+    </header>
+  
+    <section id="acasa">
+
+      <table align="center">
+<tr>
+
+<td id="td_account" onclick="document.getElementById('td_car').style.visibility='visible'; document.getElementById('td_code').style.visibility='hidden'">
+<div>
+
+   <h3>Flota</h3>
+
+  <div class="scrollbar" id="style-1">
+  <ul class="ul_scrollbar" id="ul_accounts">
+    {% for row in account_list %}
+        <li class="li_scrollbar" id="{{ row.0 }}" onclick="fillAccountField(this);">{{ row.2 }}</li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+</td>
+
+ 
+<td id="td_car" style="visibility: hidden" onclick="document.getElementById('td_code').style.visibility='visible'">
+<div>
+  <h3>Masina</h3>
+  <div class="scrollbar" id="style-1">
+  <ul class="ul_scrollbar" id="ul_cars">
+  </ul>
+  </div>
+</div>
+</td>
+
+<!--
+<a style="color:black; text-decoration:none; font: 200 17px/1.5 Helvetica, Verdana, sans-serif; text-align: center;" class="nav-link js-scroll-trigger" href="#services"></a> -->
+
+<td id="td_code" style="visibility: hidden">
+<div>
+  <h3>Parametru</h3>
+  <div class="scrollbar" id="style-1">
+  <ul class="ul_scrollbar" id="ul_codes">
+    {% for row in codes_list %}
+        <li class="li_scrollbar" id="{{ row.3 }}" onclick="fillCodeField(this);">
+
+
+          <a style="color:black; text-decoration:none; font: 200 17px/1.5 Helvetica, Verdana, sans-serif; text-align: center;" class="nav-link js-scroll-trigger" href="#services" onclick="fillCodeField('{{ row.3 }}');">{{ row.6 }}</a>
+
+        </li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+</td>
+</tr>
+</table>
+
+<!--
+<div class="card" >
+  <h4 class="card-header">Selectii</h4>
+  <div class="card-block">
+    <p class="card-text" id="summary">Inca nu ati ales nimic.</p>
+  </div>
+</div>
+-->
+
+<form class="form-horizontal" method="post">
+     <div class="form-group ">
+      <label class="control-label col-sm-2" for="summary">
+       Selectiile curente
+      </label>
+      <div class="col-sm-10">
+       <textarea class="form-control" cols="40" id="summary" name="textarea" placeholder="Inca nu ati selectat nimic." rows="10"></textarea>
+      </div>
+      </div>
+     </div>
+</form>
+
+<!--
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form class="form-horizontal" method="post">
+     <div class="form-group ">
+      <label class="control-label col-sm-2" for="summary">
+       Selectiile curente
+      </label>
+      <div class="col-sm-10">
+       <textarea class="form-control" cols="40" id="summary" name="textarea" placeholder="Inca nu ati selectat nimic." rows="10"></textarea>
+      </div>
+      </div>
+     </div>
+
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+-->
+   
+
+
+</section>
+
+    <section id="services" class="bg-light">
+
+
+<!--
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+
+   
+    <form method="post">
+      <div class="form-group"> 
+        <label class="control-label" for="date">Date</label>
+        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+      </div>
+      <div class="form-group"> 
+        <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+      </div>
+     </form>
+    
+    </div>
+  </div>    
+ </div>
+</div>
+-->
+
+<script type="text/javascript">
+
+   function changeFunc() {
+    var selectBox = document.getElementById("select");
+    var selectedValue = select.options[select.selectedIndex].value;
+
+    document.getElementById('Bar').style.visibility='visible';
+    document.getElementById('Linie').style.visibility='visible';
+    document.getElementById('Histograma').style.visibility='visible';
+
+    if (selectedValue != "Fara") {
+      document.getElementById('Histograma').style.visibility='hidden';
+    }
+
+    /*
+    var url = $(this).val(); // get selected value
+    if (url) { // require a URL
+      window.location = url;
+    }
+    */
+    $("#Aggr").val(selectedValue);
+    
+    window.location = "#grafice";
+   }
+
+</script>
+
+
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form class="form-horizontal" method="post">
+     <div class="form-group ">
+      <label class="control-label col-sm-2" for="date1">
+       De la
+      </label>
+      <div class="col-sm-10">
+       <div class="input-group">
+        <div class="input-group-addon">
+         <i class="fa fa-calendar">
+         </i>
+        </div>
+        <input class="form-control" id="date1" name="date1" placeholder="DD/MM/YYYY" type="text"/>
+       </div>
+      </div>
+     </div>
+
+     <div class="form-group ">
+      <label class="control-label col-sm-2" for="date2">
+       Pana la
+      </label>
+      <div class="col-sm-10">
+       <div class="input-group">
+        <div class="input-group-addon">
+         <i class="fa fa-calendar">
+         </i>
+        </div>
+        <input class="form-control" id="date2" name="date2" placeholder="MM/DD/YYYY" type="text"/>
+       </div>
+      </div>
+     </div>
+    
+     <div class="form-group ">
+      <label class="control-label col-sm-2" for="select">
+       Tip agregare
+      </label>
+      <div class="col-sm-10">
+       <select class="select form-control" id="select" name="select" onchange="changeFunc();"">
+        <option value="Fara">
+         Fara
+        </option>
+        <option value="D">
+         Zile
+        </option>
+        <option value="W">
+         Saptamani
+        </option>
+        <option value="M">
+         Luni
+        </option>
+        <option value="A">
+         Ani
+        </option>
+       </select>
+      </div>
+     </div>
+
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+    $(document).ready(function(){
+        // alert("Here")
+        var date_input1=$('input[name="date1"]'); //our date input has the name "date"
+        var container1=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input1.datepicker({
+            format: 'dd/mm/yyyy',
+            defaultDate: '15/11/2017',
+            container: container1,
+            todayHighlight: true,
+            autoclose: true,
+        })
+
+        date_input1.on('changeDate', function (ev) {
+           //alert("Here")
+           month = parseInt(ev.date.getMonth());
+           month += 1;
+           $(this).datepicker('hide');
+
+          /*alert(ev.date.getDate() + '/' + ev.date.getMonth() + '/' + ev.date.getFullYear());*/
+          $("#start_date").val(ev.date.getDate() + '/' + month.toString() + '/' + ev.date.getFullYear())
+        });
+
+
+        var date_input2=$('input[name="date2"]'); //our date input has the name "date"
+        var container2=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input2.datepicker({
+            format: 'dd/mm/yyyy',
+            defaultDate: '15/11/2017',
+            container: container2,
+            todayHighlight: true,
+            autoclose: true,
+        })
+
+        date_input2.on('changeDate', function (ev) {
+
+          month = parseInt(ev.date.getMonth());
+          month += 1;
+
+          //alert(ev.date.getDate() + '/' + ev.date.getMonth() + '/' + ev.date.getFullYear());
+          $("#end_date").val(ev.date.getDate() + '/' + month.toString() + '/' + ev.date.getFullYear())
+        });
+    })
+</script>
+
+<form action="/explore/" method="post">
+    <input id="CarID" name="CarID" type="hidden" placeholder="You can fill a CarID" class="form-control input-md">
+    <input id="Code" name="Code" type="hidden" placeholder="You can fill a Code" class="form-control input-md">
+    <input id="AccountID"  type="hidden" name="AccountID" />
+    <input id="Aggr" type="hidden" name="Aggr" />
+    <input id="ChartType" type="hidden"" name="ChartType" />
+    <input id="start_date" type="hidden" name="start_date" size="20" />
+    <input id="end_date" type="hidden" name="end_date" size="20" />
+    <button id="submit" type="hidden" name="submit" class="btn btn-primary">Search</button></p>
+</form>
+
+ </section>
+
+
+
+<!--
+<div id="datetimepicker1" class="input-append date">
+     <input data-format='dd/MM/yyyy' type="text" id="start"></input>
+     <span class="label label-info" text-align: right> Data de inceput </span>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+</div>
+
+    <br> <br>
+      
+<div id="datetimepicker2" class="input-append date">
+    <input data-format='dd/MM/yyyy' type="text" id="end"></input>
+     <span class="label label-info" text-align: right> &nbsp Data de sfarsit</span>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+</div>
+
+    <script type="text/javascript"
+     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script> 
+    <script type="text/javascript"
+     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+    <script type="text/javascript">
+      $('#datetimepicker1').datetimepicker({
+        format: 'dd/MM/yyyy',
+        autoclose: true,
+        pickTime: false,
+      }).on('changeDate', function (ev) {
+        $(this).data('DateTimePicker').hide();
+        alert("here")
+        /*$(this).datetimepicker('hide'); */
+        /*alert("Here")*/
+      $("#start_date").val(ev.date);
+});
+    </script>
+    <script type="text/javascript">
+      $('#datetimepicker2').datetimepicker({
+        format: 'dd/MM/yyyy',
+        autoclose: true,
+        pickTime: false,
+      }).on('changeDate', function (ev) {
+        /*$(this).data('DateTimePicker').hide();*/
+      /*$(this).datetimepicker('hide'); */
+      /* alert(ev.getDate()+'/'+ev.getMonth()+ev.getFullYear()); */
+      $("#end_date").val(ev.date);
+});
+    </script>
+
+<script type="text/javascript">
+$(function () {
+  $('.datetimepickerinline').datetimepicker({
+      inline: true
+  });
+  $('.datetimepickerinline').on('change dp.change', function(e){
+    $('input').val($(this).data('date'));
+  });
+});
+</script>
+
+<div id="container">
+<div class="my-example">
+  <input id="" placeholder="press to show calendar" class="input">
+  <div class="dropdown">
+    <div class="datetimepickerinline">
+    </div>
+</div>
+</div>
+</div>
+
+
+
+<br> <br>
+    <span class="label label-info" for="selectBox">Agregare</span>
+    <select id="selectBox" onchange="changeFunc();" class="form-control input-lg" autocomplete="off">
+      <optgroup label="Aggregate dates by">
+          <option value="1">Fara</option>
+          <option value="2">Zile</option>
+          <option value="3">Luni</option>
+          <option value="4">Ani</option>
+      </optgroup>
+    </select>
+
+</form>
+-->
+
+<!--
+<input type="text" value="02/16/12" data-date-format="mm/dd/yy" class="datepicker" >
+
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-1.7.1.js"></script>  
+<script src="js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+$('.datepicker').datepicker();
+</script>   
+
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
+    </div>
+</div>
+
+<p>Date: <input type="text" id="datepicker"></p>
+-->
+
+
+<script type="text/javascript">
+
+   function chartType(that) {
+
+    event.preventDefault();
+
+    //alert(that.id);
+
+    $("#ChartType").val(that.id);
+
+    document.getElementById("submit").click();
+
+   }
+</script>
+
+    <section id="grafice">
+
+       <div class="list-group">
+            <a id="Bar" onclick="chartType(this); return false;" class="list-group-item list-group-item-action" target="_blank" style="visibility: hidden"><i class="icofont icofont-chart-bar-graph"></i>
+        <font size="5">Vizualizare date sub forma de Bar Plot</font></a>
+
+            <a id="Linie" onclick="chartType(this); return false;" class="list-group-item list-group-item-action" target="_blank" style="visibility: hidden"><i height="420" class="icofont icofont-chart-line"></i>
+        <font size="5">Vizualizare date sub forma de Line Plot</font></a>
+
+            <a id="Histograma" onclick="chartType(this); return false;" class="list-group-item list-group-item-action" target="_blank" style="visibility: hidden"><i class="icofont icofont-chart-histogram"></i>
+        <font size="5">Vizualizare date sub forma de Histograma</font></a>
+      </div>
+    </section>
+
+    
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Go Drive</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="{% static 'api/index_assets/js/scrolling-nav.js' %}"></script>
+
+    <script src="{% static 'api/index_assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    
+    <script src="{% static 'api/index_assets/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  </body>
+
+</html>

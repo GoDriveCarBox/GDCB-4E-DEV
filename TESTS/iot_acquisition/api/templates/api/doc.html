@@ -1,0 +1,215 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en-US" class="">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="{% static 'api/css/doc.min.css' %}">
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'api/images/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'api/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'api/css/dataTables.bootstrap.min.css' %}">
+	<style>
+.row-DateAdded {
+        width: 19%;
+}
+	</style>
+</head>
+	
+<body class="post-template-default single single-post postid-349 single-format-standard">
+
+	<!-- masthead -->
+	<header class="masthead" role="banner">
+		<div class="current-section section-landing blog-landing">
+		  <h2 class="section-hed">GODRIVE REST API Documentation</h2>
+		</div>
+	</header>
+	<!-- /masthead -->
+	<main role="main" id="main">
+	<div class="post" id="post-349">
+		<div class="col-fullwidth">
+			<div class="col-condensed">
+				<div class="post-body blog-content">
+
+					<p><style>
+					.blog-comparison td {
+					padding-bottom: 20px;
+					}
+					.blog-comparison th {
+					padding-right: 10px;
+					}
+					</style></p>
+
+					<table class="blog-comparison">
+					<tr>
+						<th valign="top">
+						  Title
+						</th>
+						<td>
+							<span class="caption">Upload JSON objects in order to register entries in RawData table</span> <br>
+							<p>
+								<i>
+									<ul>
+										<li>The client is supposed to upload JSON objects </li>
+										<li>The server will handle the request and will update the database properly</li>
+									</ul>
+								</i>
+							</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th valign="top">
+							URL
+						</th>
+						<td>
+							<span class="caption"><b><code>/upload</code></b></span> <br>
+						</td>
+					</tr>
+
+					<tr>
+						<th valign="top">
+						  Method
+						</th>
+						<td>
+							<span class="caption"><b><code>GET</code> | <code>POST</code></b></span> <br>
+							<p>
+                                                                <i>
+                                                                        <ul>
+                                                                                <li>If the clients make a GET request, they will be able to see this documentation page</li>
+                                                                        </ul>
+                                                                </i>
+                                                        </p>
+
+						</td>
+					</tr>
+
+					<tr>
+						<th valign="top">
+						  Data Params
+						</th>
+						<td>
+							<span class="caption">If making a POST request, the header should contain a <code><b>Content-Type</b></code> header that is set to <code><b>application/json</b></code></span> <br>
+							<b>Example:</b> <br>
+							<pre>
+{
+	<b>"CarID"</b>: [integers],
+	<b>"Code"</b>: [strings],
+	<b>"Value"</b>: [integers]
+}
+
+							</pre>
+							<b> Detalied Example: </b>
+							<pre>
+{
+        <b>"CarID"</b>: [1,1,1,1,2,3,4],
+        <b>"Code"</b>: ["00", "0F", "2B", "1E", "08", "11", "FF"],
+        <b>"Value"</b>: [73, 65, 8, -10, 100, 145, 0]
+}
+							</pre>
+						</td>
+					</tr>
+
+					<tr>
+						  <th valign="top">
+							Success Response
+						  </th>
+						  <td>
+							  <span class="caption">The server processes each pair (CarID, Code, Value) and tries to register a new entry in the database. </span> <br>
+						  </td>
+					</tr>
+
+					<tr>
+						  <th valign="top">
+							Error Response
+						  </th>
+						  <td>
+							  <span class="caption">The POST request will be automatically dropped if the headers do not contain <code>{"Content-Type": "application/json"}</code>. In this case, the client will receive a JSON response, whose format is detalied in the below example</code></span> <br>
+							  <b> Example: </b> <br>
+                                                        <pre>
+{
+        <b>"status"</b>: "INVALID_HEADER"
+        <b>"status_code"</b>: "401"
+        <b>"description"</b>: "Please send a JSON object"
+}
+
+                                                        </pre> <br>
+<span class="caption">Also, if there are inconsistencies (the sizes of the vectors that are received are not equal), the POST request will be automatically dropped</span><br>
+                                                          <b> Example: </b> <br>
+                                                        <pre>
+{
+        <b>"status"</b>: "BAD_REQUEST"
+        <b>"status_code"</b>: "400"
+        <b>"description"</b>: "Inconsistent data - request dropped"
+}
+
+                                                        </pre>
+						  </td>
+					</tr>
+
+					<tr>
+					  <th valign="top">
+						Sample Call
+					  </th>
+					  <td>
+						  <span class="caption">A sample call to the endpoint in a runnable format (Python).</span> <br>
+						  <pre>
+<code>import requests
+import json
+from urllib.request import urlopen
+
+url = 'http://app1.westeurope.cloudapp.azure.com/upload/'
+post_fields = { 'CarID': [1,2,3,4], 'Code': ['07', '08', '0B', 'FF'], 'Value': [12, 70, 13, 400] }
+
+request = requests.post(url, data=json.dumps(post_fields), headers={'Content-Type': 'application/json'})
+data = json.loads(request.text)
+print(data)</code>
+
+						</pre>
+					  </td>
+					</tr>
+					<tr>
+                                                <th valign="top">
+                                                  Enabled Codes
+                                                </th>
+                                                <td>						
+                                                   <table style="margin-top:10px; margin-left:4px;" width="750" id="mytable" class="table table-bordered table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Code</th>
+									<th>Description</th>
+									<th class="row-DateAdded">DateAdded</th>
+									<th>Units</th>
+								</tr>
+							</thead>
+							<tbody>
+         							{% for index, row in df.iterrows %}
+    								<tr>
+               								<td>{{ row.3 }}</td>
+               								<td>{{ row.6 }}</td>
+               								<td>{{ row.7 }}</td>
+									<td>{{ row.10 }}</td>
+           							</tr>
+								{% endfor %}
+       							</tbody>
+
+						  </table>
+
+						  <script src="{% static 'api/js/jquery.js' %}"></script>
+				  		  <script src="{% static 'api/js/jquery.dataTables.min.js' %}"></script>
+						  <script src="{% static 'api/js/bootstrap.min.js' %}"></script>
+						  <script src="{% static 'api/js/dataTables.bootstrap.min.js' %}"></script>
+
+						  <script>
+						 $('#mytable').dataTable({
+       							"order": [],
+       							"pageLength": 10,
+       							"lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+    						});
+						</script>
+                                             </td>
+                                        </tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,4 @@
+[GDCBDE][2017-11-11 14:19:07] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2017-11-11 14:19:07] [SQLHLP] Using data folder:.../GoogleDrive/_godrive_data\db_cache
+[GDCBDE][2017-11-11 14:19:07] [SQLHLP] ODBC Conn: DRIVER={ODBC Driver 13 for SQL Serv...
+[GDCBDE][2017-11-11 14:19:08] [SQLHLP] Connection created on carbox.database.windows.net

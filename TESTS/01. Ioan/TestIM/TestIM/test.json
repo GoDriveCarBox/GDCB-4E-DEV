@@ -1,0 +1,58 @@
+{
+	"maps": [
+		{
+			"id": 519188,
+			"name": "Novinki",
+			"country": "RU",
+			"coord": {
+				"lon": 37.666668,
+				"lat": 55.683334
+			}
+		},
+		{
+			"id": 708546,
+			"name": "Holubynka",
+			"country": "UA",
+			"coord": {
+				"lon": 33.900002,
+				"lat": 44.599998
+			}
+		},
+		{
+			"id": 707860,
+			"name": "Hurzuf",
+			"country": "UA",
+			"coord": {
+				"lon": 34.283333,
+				"lat": 44.549999
+			}
+		},
+		{
+			"id": 6154022,
+			"name": "Spragge",
+			"country": "CA",
+			"coord": {
+				"lon": -82.666557,
+				"lat": 46.200069
+			}
+		},
+		{
+			"id": 6106505,
+			"name": "Plunkett",
+			"country": "CA",
+			"coord": {
+				"lon": -105.451149,
+				"lat": 51.916771
+			}
+		},
+		{
+			"id": 5903664,
+			"name": "Blanc-Sablon",
+			"country": "CA",
+			"coord": {
+				"lon": -57.13142,
+				"lat": 51.416801
+			}
+		}
+	]
+}
