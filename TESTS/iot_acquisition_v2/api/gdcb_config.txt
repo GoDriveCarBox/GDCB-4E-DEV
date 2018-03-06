@@ -2,6 +2,7 @@
 	"PREDICTOR_TABLE" : "Codes",
 	"CARS_TABLE" : "Cars",
 	"ACCOUNTS_TABLE" : "Accounts",
+	"USERS_TABLE" : "Users",
 	"RAWDATA_TABLE" : "RawData",
   	"CARSXCODESV2_TABLE": "CarsXCodes_v2",
   "HEX_CODE_FIELD": "Code",

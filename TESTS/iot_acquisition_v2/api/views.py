@@ -17,30 +17,57 @@ gdcb = GDCBExplorer()
 
 crt_user   = None
 crt_passwd = None
-
+def map(request):
+    return render(request, "api/map.html")
 def index(request):
 
   global crt_user
   global crt_passwd
-
+  global err_msg
+  email_field = 'Adresa de email'
+  pass_field = 'Parola'
   if request.method == 'POST':
     crt_user = request.POST['email']
     crt_passwd = request.POST['pwd']
 
-    select_query = 'SELECT * FROM Users WHERE Email =' + "'" + str(crt_user) + "'" + ' AND Password =' + \
+    select_query = 'SELECT * FROM Users WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
                   "'" + str(crt_passwd) + "'" + ";"
 
     login_df = gdcb.sql_eng.Select(select_query)
+    err_msg = ""
+    global nume
+    nume_df = pd.DataFrame(login_df['Nume'])
+    nume = nume_df['Nume'][0]
+    global prenume
+    prenume_df = login_df['Prenume']
+    prenume = prenume_df[0]
+    global tel
+    tel_df = login_df['Telefon']
+    tel = tel_df[0]
+    global descriere
+    descriere_df = login_df['Descriere_companie']
+    descriere = descriere_df[0]
+    global rol
+    rol_df = login_df['Rol_user']
+    rol = rol_df[0]
 
-    if len(login_df) != 0:
+    if len(login_df):
+
       print(login_df)
+      print("\n")
+      print(nume)
       return redirect('/explore')
     else:
-      return HttpResponse("Error")
+      err_msg = "Username sau parola gresita"
+      return HttpResponse(err_msg)
 
+  #context = {
+#    'error_msg': err_msg,
+ # }
   if request.method == 'GET':
-    return render(request, 'api/first_page.html')
+    return render(request, 'api/first_page.html')#, context)
     #logger.info("Accessing index view")
+
 
 def api_view(request):
   global gdcb
@@ -107,6 +134,80 @@ def search_view(request, template='api/rawdata.html', page_template='api/search_
       template = page_template
     return render(request, template, context)
   return HttpResponse("Internal error")
+def admin(request):
+    global crt_user
+    global crt_passwd
+    global nume
+    global prenume
+    global tel
+    global descriere
+    global df_users
+    global rol
+    df_users =  gdcb.sql_eng.ReadTable(gdcb.config_data["USERS_TABLE"], caching=False)
+
+    context = {
+        'username': crt_user,
+        'passwd': crt_passwd,
+        'nume': nume,
+        'prenume': prenume,
+        'tel': tel,
+        'descriere': descriere,
+        'rol': rol,
+        'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+    }
+
+    if request.method == 'GET':
+        if crt_user == "" or crt_user == None:
+            return redirect("/")
+        else:
+            return render(request, "api/admin.html", context)
+
+def profile(request):
+    global crt_user
+    global crt_passwd
+    global nume
+    global prenume
+    global tel
+    global descriere
+    context = {
+        'username': crt_user,
+        'passwd': crt_passwd,
+        'nume': nume,
+        'prenume': prenume,
+        'tel': tel,
+        'rol': rol,
+        'descriere': descriere,
+    }
+    if request.method == 'GET':
+        if crt_user == "" or crt_user == None:
+            return redirect("/")
+        else:
+            return render(request, "api/profile.html", context)
+
+    if request.method == 'POST':
+        if request.POST.get("profileform") is not None:
+                nume = request.POST['profile_name']
+                prenume = request.POST['profile_prenume']
+                tel = request.POST['profile_tel']
+                company_type = request.POST['profile_company_type']
+                descriere = request.POST['profile_company_desc']
+                update_query = 'UPDATE Users SET Nume =' + nume + 'Prenume = ' + prenume + 'Telefon =' + tel + 'Tip_cont =' + company_type + 'Descriere_companie =' + descriere + ' WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
+                              "'" + str(crt_passwd) + "'" + ";"
+                context = {
+                    'username': crt_user,
+                    'passwd': crt_passwd,
+                    'nume': nume,
+                    'prenume': prenume,
+                    'tel': tel,
+                    'rol': rol,
+                    'descriere': descriere,
+                }
+                print("Test")
+                gdcb.sql_eng.ExecUpdate(update_query)
+                if crt_user == "" or crt_user == None:
+                    return redirect("/")
+                else:
+                    return render(request, "api/profile.html", context)
 
 def test_view(request):
   global df_rawdata_toshow
@@ -124,7 +225,7 @@ def test_view(request):
 
   if request.method == 'GET':
 
-    if crt_user == None:
+    if crt_user == "" or crt_user == None:
       return redirect("/")
 
     matrix = np.ones((10, 100)) * (-1) # must create dynamic array at least (better update with Ajax)
@@ -144,12 +245,16 @@ def test_view(request):
       'codes_list': [tuple(x) for x in df_codes.to_records(index=False)],
       'username': crt_user,
       'passwd': crt_passwd,
+      'nume': nume,
+      'prenume': prenume,
+      'tel': tel,
+      'rol': rol,
       'page_template': 'api/new_test.html',
     }
     return render(request, 'api/erik_index.html', context)
 
   if request.method == 'POST':
-  
+
     if request.POST.get("bar_plot") is not None:
       chart_type = "bar"
     elif request.POST.get("line_plot") is not None:
@@ -217,7 +322,7 @@ def test_view(request):
 
 def is_date(string):
   from dateutil.parser import parse
-  try: 
+  try:
     parse(string)
     return True
   except ValueError:
@@ -226,7 +331,7 @@ def is_date(string):
 def process_plot_title(plt_title):
 
   words = plt_title.split()
- 
+
   first_line, second_line = None, None
   split_idx = None
   for i in range(len(words)):
@@ -286,7 +391,7 @@ def process_plot_data(source_df, group_by=None):
 
 
   if str.lower(group_by) != "N/A":
-  
+
     zipped_l = [(x[i], y[i]) for i in range(len(x)) if i not in del_idx]
     x, y = zip(*zipped_l)
 
@@ -299,7 +404,7 @@ def process_plot_data(source_df, group_by=None):
   elif group_by == "A":
     x = [value.split(",")[0].split("/")[2] for value in x]
 
-  #[ (l[i], ll[i]) for i in range(len(ll)) if i not in del_idx ] 
+  #[ (l[i], ll[i]) for i in range(len(ll)) if i not in del_idx ]
 
   #x = list(unique_everseen(x))
 
@@ -321,8 +426,8 @@ def genereta_plot(source_df,  plt_title, x_title = "Data", y_title = None, type=
   hover = HoverTool(tooltips=[
     ("(Data - Valoare)", "(@x - @y{10.2f})"),
   ])
-  plot = figure(x_axis_label = x_title, y_axis_label = y_title, x_range = source.data["x"], 
-        y_range= ranges.Range1d(start = min_y , end= max_y + 0.1 * max_y), background_fill_color="#d3d3d3", 
+  plot = figure(x_axis_label = x_title, y_axis_label = y_title, x_range = source.data["x"],
+        y_range= ranges.Range1d(start = min_y , end= max_y + 0.1 * max_y), background_fill_color="#d3d3d3",
         tools = [hover, BoxZoomTool(), WheelZoomTool(), ResetTool(), PanTool()])
         #, output_backend="webgl")
 
@@ -331,7 +436,7 @@ def genereta_plot(source_df,  plt_title, x_title = "Data", y_title = None, type=
   else:
     plot.add_layout(Title(text= second_line, text_font_size="9pt"), 'above')
     plot.add_layout(Title(text= first_line, text_font_size="10pt"), 'above')
-       
+
   plot.sizing_mode = 'scale_height'
 
   if len(x) > 10:
@@ -387,13 +492,13 @@ def create_histogram(source_df,  plt_title, y_title = "Valoare medie"):
   import os
 
   x, y, min_y, max_y = process_plot_data(source_df, "N/A")
-  
+
   first_line, second_line = process_plot_title(plt_title)
 
   hover = HoverTool(tooltips=[
     ("(x,y)", "($x, $y)"),
   ])
-  plot = figure(x_axis_label = "Valoare", y_axis_label = "Numar", 
+  plot = figure(x_axis_label = "Valoare", y_axis_label = "Numar",
           background_fill_color="#d3d3d3", tools = [hover, BoxZoomTool(), WheelZoomTool(), ResetTool(), PanTool()])
 
   source = ColumnDataSource(dict(x= x, y= y))
@@ -409,7 +514,7 @@ def create_histogram(source_df,  plt_title, y_title = "Valoare medie"):
   else:
     plot.add_layout(Title(text= second_line, text_font_size="9pt"), 'above')
     plot.add_layout(Title(text= first_line, text_font_size="10pt"), 'above')
-       
+
   plot.sizing_mode = 'scale_height'
   plot.xaxis.major_label_orientation = pi/4
   plot.xaxis.axis_label_text_font_size = "12pt"

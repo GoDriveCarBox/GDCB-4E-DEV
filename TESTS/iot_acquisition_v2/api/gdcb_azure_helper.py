@@ -179,7 +179,20 @@ class MSSQLHelper:
       except Exception as err: #pyodbc.Error as err:
           self.HandleError(err)
       return
-
+#Metoda adaugata
+  def ExecUpdate(self, sUpdateQuery):
+      try:
+          t0 = tm.time()
+          cursor = self.conn
+          cursor.execute(sUpdateQuery)
+          self.conn.commit()
+          t1 = tm.time()
+          tsec = t1-t0
+          tmin = float(tsec) / 60
+          self._logger("EXEC SQL Update time: {:.1f}s ({:.2f}min)".format(tsec, tmin))
+      except Exception as err:
+          self.HandleError(err)
+      return
 
   def SaveTable(self, df, sTable):
     dfsize = self.GetSize(df) / (1024*1024)
@@ -277,5 +290,3 @@ class MSSQLHelper:
 if __name__ == '__main__':
 
     print("ERROR: MSSQLHelper is library only!")
-
-

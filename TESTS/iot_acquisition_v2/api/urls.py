@@ -10,5 +10,10 @@ urlpatterns = [
     url(r'^search$', views.search_view),
     url(r'^explore$', views.test_view),
     url(r'^explore/$', views.test_view),
+    url(r'^map$', views.map),
+    url(r'^profile$', views.profile),
+    url(r'^profile/$', views.profile),
+    url(r'^admin$', views.admin),
+    url(r'^admin/$', views.admin),    
     url(r'', views.index),
 ]

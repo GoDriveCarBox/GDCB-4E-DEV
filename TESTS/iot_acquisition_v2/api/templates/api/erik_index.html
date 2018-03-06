@@ -30,12 +30,56 @@
 	<link href="{% static 'api/erik_assets/css/responsive.css' %}" rel="stylesheet" type="text/css" />
 	<!-- Color Panel -->
     <link href="{% static 'api/erik_assets/css/color-panel.css' %}" rel="stylesheet" type="text/css" />
+<style>
+@media all and (min-width: 981px) and (max-width: 1024px) {
+/* put your css styles in here */
+.first-section	{
+	margin-top: 20%;
+}
 
+}
+@media all and (max-width: 980px) {
+/* put your css styles in here */
+.first-section	{
+	padding-top: 25%;
+}
+
+}
+@media all and (min-width: 1025px) {
+/* put your css styles in here */
+.first-section	{
+	padding-top: 5%;
+}
+
+}
+.small-text	{
+	font-size: 12px !important;
+}
+.ghost-button-full-color {
+			display: inline-block;
+			padding: 8px;
+			color: #F1C40F;
+			background-color: transparent;
+			border: 2px solid #F1C40F;
+			border-radius: 10px;
+			text-align: center;
+			outline: none;
+			text-decoration: none;
+			transition: color 0.3s ease-out,
+			background-color 0.3s ease-out,
+			border-color 0.3s ease-out;
+}
+.ghost-button-full-color:hover,
+.ghost-button-full-color:active {
+			background-color: #009ac9;
+			border-color: #009ac9;
+			color: #F1C40F;
+}
+</style>
 </head>
 
 
 <body>
-
 	<!-- Page Loader -->
 	<div class="pageloader"></div>
 
@@ -71,14 +115,24 @@
 								<!-- Menu Begins -->
 								<nav id="topnav" role="navigation" class="collapse navbar-collapse bs-navbar-collapse no-padding">
 									<ul class="nav navbar-nav navbar-right uppercase">
-										<li><a href="#about" class="scroll">Acasa</a></li>
-										<li><a href="#features" class="scroll">Servicii</a></li>
-										<li><a href="#reviews" class="scroll">Despre</a></li>
-										<li><a href="#video" class="scroll">Blog</a></li>
-										<li><a href="#contact-us" class="scroll">Contact</a></li>
-										<form method="post">
-										<li><button type="submit" class="scroll" id="log_out" name="log_out">LOG OUT</button></li>
-										</form>
+										<li><a href="../#about" class="scroll">Acasa</a></li>
+										<li><a href="../#features" class="scroll">Servicii</a></li>
+										<li><a href="../#reviews" class="scroll">Despre</a></li>
+										<li><a href="../#video" class="scroll">Blog</a></li>
+										<li><div class="dropdown">
+									    <button type="button" class="ghost-button-full-color" data-toggle="dropdown" value="CONTUL MEU" style="color: #F1C40F;">CONTUL MEU</button>
+											<ul class="dropdown-menu">
+									      <li><a><span style="color: black; font-size: 12px;">{{ username }}</span></a></li>
+												{% if 'admin' in rol %}
+												<li><a href="admin" class="scroll">Panou administrare</a></li>
+												{% endif %}
+												<li><a href="explore" class="scroll">Explore</a></li>
+									      <li><a href="profile" class="scroll">Profil</a></li>
+												<li><a href="../" class="scroll" style="font-weight: 800; color: #428bca;">LOG OUT<form method="post" style="display: inline; visibility: hidden;"><button type="submit" class="scroll" id="log_out" name="log_out" style="visibility: hidden;">LOG OUT</button></form></a></li>
+									    </ul>
+									  </div>
+									</li>
+
 									</ul>
 								</nav><!-- Menu Ends -->
 							</div><!-- Navigation Menu Ends -->
@@ -96,103 +150,10 @@
 					</div>
 				</div>
 			</div><!-- Sticky Header Ends -->
-			<!-- Banner Section Begins -->
-			<div class="triangle-bg">
-				<div id="about" class="banner-section container">
-					<div class="row">
-
-						<!-- Left Banner Image Begins -->
-						<div class="col-md-5 right-banner-image animated" data-animation="fadeInLeft" data-animation-delay="500">
-							<div class="row">
-								<div class="col-md-8">
-									<!-- Banner Image -->
-									<img class="img-responsive" src="{% static 'api/erik_assets/images/iphone-shot3.png' %}" alt="Iphone" />
-
-									<!-- Banner Nav Shape -->
-									<div class="row triangle-shape banner-nav">
-										<div class="col-sm-12">
-											<a href="#features" class="banner-triangle scroll color-white"><i class="flaticon flaticon-arrow351 gk-triangle-bigsharp"></i></a>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div> <!-- Left Banner Image Begins -->
-
-						<!-- Right Banner Slider Begins -->
-						<div class="col-md-7 left-banner-text animated" data-animation="fadeInRight" data-animation-delay="500">
-							<!-- Carousel Slider Begins -->
-							<div id="banner-slider" class="banner-carousel-slider color-yellow">
-								<!-- Slider Item 1 -->
-								<div class="banner-item text-center">
-									<!-- Icon -->
-									<i class="fa fa-magic"></i>
-									<!-- Title -->
-									<h2 class="text-uppercase">Cutia neagră <span class="text-extrabold"> in cloud</span> pentru automobile</h2>
-									<!-- Content -->
-									<p class="slider-text">GoDrive CarBox este o platformă completă pentru monitorizarea, evaluarea și înregistrarea în timp real, în mediu de tip cloud – computing, a funcționării automobilului personal prin tehnologii de tip Internetul Lucrurilor (Internet-of-Things sau IoT)</p>
-									<!-- Button -->
-									<div class="slider-button">
-										<a href="#" class="btn gk-btn green-btn" role="button"><i class="fa fa-usd"></i> Buy Now</a>
-									</div>
-								</div>
-								<!-- Slider Item 2 -->
-								<div class="banner-item text-center">
-									<!-- Icon -->
-									<i class="fa fa-laptop"></i>
-									<!-- Title -->
-									<h1 class="text-uppercase"><span class="text-extrabold">Monitorizare</span></h1>
-									<!-- Content -->
-									<p class="slider-text">Monitorizează parametrii de funcționare ai autovehiculului prin tehnologii de tip Internetul Lucrurilor (Internet of Things)</p>
-									<!-- Button -->
-									<div class="slider-button">
-										<a href="#" class="btn gk-btn green-btn" role="button"><i class="fa fa-tag"></i> Learn More</a>
-									</div>
-								</div>
-
-							</div><!-- Carousel Slider Ends -->
-
-							<!-- Banner Counter Info Begins -->
-							<div class="row">
-								<div class="col-sm-12 banner-image-info">
-									<div class="row">
-										<!-- Column 1 -->
-										<div class="col-sm-4 banner-left-margin">
-											<div class="banner-info col-xs-6 text-right text-uppercase">
-												<div class="count-number" data-count="6249"><span class="counter text-bold"></span></div> Downloaded
-											</div>
-											<div class="banner-info-right col-xs-6 no-padding">
-												<span class="close-brackets">}</span> <i class="fa fa-cloud-download color-yellow"></i>
-											</div>
-										</div>
-										<!-- Column 2 -->
-										<div class="col-sm-4 banner-left-margin">
-											<div class="banner-info col-xs-6 text-right text-uppercase">
-												<div class="count-number" data-count="238"><span class="counter text-bold"></span></div> Android Users
-											</div>
-											<div class="banner-info-right col-xs-6 no-padding">
-												<span class="close-brackets">}</span> <i class="fa fa-android color-yellow"></i>
-											</div>
-										</div>
-										<!-- Column 3 -->
-										<div class="col-sm-4 banner-left-margin">
-											<div class="banner-info col-xs-6 text-right text-uppercase">
-												<div class="count-number" data-count="1027"><span class="counter text-bold"></span></div> IOS Users
-											</div>
-											<div class="banner-info-right col-xs-6 no-padding">
-												<span class="close-brackets">}</span> <i class="fa fa-apple color-yellow"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div><!-- Banner Counter Info Ends -->
-						</div><!-- Right Banner Slider Ends -->
-					</div>
-				</div>
-			</div><!-- Banner Section Ends -->
-		</div><!-- Header Ends -->
-
+		</div>
+</div>
 		<!-- Layout Begins -->
+
 		<section id="shapes" class="shape-section">
 <script type="text/javascript">
 
@@ -257,11 +218,18 @@
 		 document.getElementById('plots').style.display = "block";
 	}
 </script>
+<style>
+	#map{
+		height: 400px;
+    width: 80rem;
+    border: 3px solid blue;
+		margin: 0px;
+		padding: 0px;
+	}
+</style>
+		<div class="first-section">
 
 						<div class="container pricing-container">
-							Username: {{ username }}
-
-
 						    <!-- Pricing Grid Row Begins -->
 								<form role="form" name="query" class="form-horizontal" id="query" method="post" action="/explore/">
 		                <div class="row pricing-grid">
@@ -279,7 +247,7 @@
 													<style>
 															option {
 																text-align: center;
-																font-size: 24px;
+																font-size: 18px;
 																font-weight: bold;
 															}
 															#cod	{
@@ -291,7 +259,7 @@
 													</style>
 													<!-- Price Table Features -->
 														<select multiple onChange="next2()" class="form-control" id="flota" name="flota" style="max-height: 400px;">
-																<ul class="list-unstyled gk-list text-bold color-grey">
+																<ul class="list-unstyled gk-list text-bold color-grey small-text">
 
 																		 {% for row in account_list %}
         																 	<li class="no-border" id="{{ row.0 }}"><option onclick="fillAccountField(this);" value="{{ row.0 }}">{{ row.2 }}</option></li>
@@ -347,7 +315,7 @@
 		                       		</div><!-- Pricing Grid Row Ends -->
 
 								</div>
-
+		</div>
 		<style>
 		label	{
 			font-size: 2.5rem;
@@ -364,37 +332,45 @@
 												<div class="gk-contact-form container animated" data-animation="fadeInUp" data-animation-delay="900">
 													<!-- Form Begins -->
 
-														<div class="row">
-															<div class="col-sm-12 col-md-12">
-																<div class="container" id="date_select" style="display: none;">
-																    <div class="row">
-																			<label><h5> Data inceput: </h5></label>
-																			<input type = "date" id="d_inceput" name="d_inceput" class="input-name form-control"></input>
-																    </div>
-																		<div class="row">
-																			<label><h5> Data sfarsit: </h5></label>
-																			<input type = "date" id="d_sfarsit" name="d_sfarsit" class="input-name form-control"  onchange="next5()"></input>
+														<div class="row" style="margin-top: -20px; padding-top: -20px;">
+															<div class="col-sm-5 col-md-5" style="display: inline; float: left;">
+																	<div class="container" id="date_select" style="display: none;">
+																	    <div class="row">
+																				<label><h5> Data inceput: </h5></label>
+																				<input type = "date" id="d_inceput" name="d_inceput" class="input-name form-control"></input>
+																	    </div>
+																			<div class="row">
+																				<label><h5> Data sfarsit: </h5></label>
+																				<input type = "date" id="d_sfarsit" name="d_sfarsit" class="input-name form-control"  onchange="next5()"></input>
+																			</div>
+																	</div>
+																	<br><br>
+
+																		<div id="tip_de_agregare" style="display: none;">
+																			<label><h5> Tip de agregare: </h5></label>
+																					<select id="tip_agregare" name="tip_agregare" onChange="next6()" class="form-control" style="max-height: 400px;">
+																									<li class="no-border"><option value="Fara">Fara</option></li>
+																									<li class="no-border"><option value="D">Zile</option></li>
+																									<li class="no-border"><option value="W">Saptamani</option></li>
+																									<li class="no-border"><option value="M">Luni</option></li>
+																									<li class="no-border"><option value="A">Ani</option></li>
+																					</select>
+																					<br><br>
+
+																		<!-- Submit Button -->
+																		<div class="gk-input-submit submit" id="plots"  style="display: none;">
+																			<button type="submit" class="btn gk-submit" id="bar_plot" name="bar_plot">Bar Plot</button>
+																			<button type="submit" class="btn gk-submit" id="line_plot" name="line_plot">Line Plot</button>
 																		</div>
 																</div>
-																<br><br>
-																<div class="col-sm-12 col-md-12" id="tip_de_agregare" style="display: none;">
-																<select id="tip_agregare" name="tip_agregare" onChange="next6()" class="form-control" style="max-height: 400px;">
-																				<li class="no-border"><option value="Fara">Tip de agregare</option></li>
-																				<li class="no-border"><option value="D">Zile</option></li>
-																				<li class="no-border"><option value="W">Saptamani</option></li>
-																				<li class="no-border"><option value="M">Luni</option></li>
-																				<li class="no-border"><option value="A">Ani</option></li>
-																</select>
-																<br><br>
 															</div>
-																<!-- Submit Button -->
-																<div class="gk-input-submit submit" id="plots"  style="display: none;">
-																	<button type="submit" class="btn gk-submit" id="bar_plot" name="bar_plot">Bar Plot</button>
-																	<button type="submit" class="btn gk-submit" id="line_plot" name="line_plot">Line Plot</button>
-																</div>
+
+															<div class="col-sm-7 col-md-7" style=" display: inline;">
+																	<div id="map"></div>
 															</div>
 														</div>
 											</form><!-- Form Ends -->
+
 											<script type="text/javascript">
 												var flota = document.getElementById ("flota");
 												var flota_selected_option = flota.options[flota.selectedIndex].value;
@@ -417,70 +393,54 @@
 						</div><!-- Contact Section Ends -->
 					</div><!-- Pricing Section Ends -->
 
-					<!-- Contact Section Begins -->
-					<div id="contact-us" class="contact-section section-padding index-big relative">
-						<div class="container">
-							<div class="row">
-								<!-- Contact Left Info Begins -->
-								<div class="col-md-6 animated" data-animation="fadeInLeft" data-animation-delay="500">
-									<!-- Title -->
-									<h2 class="section-title color-grey"><span class="text-extrabold">Contact</span> Us</h2>
-									<!-- Shape Down Arrow -->
-									<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
-									<!-- Description -->
-									<h3 class="section-msg text-center color-grey">Let drop a line to us & we will be <br />in touch soon.</h3>
+					<script>
+						var map;
+						function initMap() {
+							var minZoomLevel = 6;
 
-									<!-- Contact Form Container Begins -->
-									<p class="gk-form-message"></p>
-									<div class="gk-contact-form container animated" data-animation="fadeInUp" data-animation-delay="900">
-										<!-- Form Begins -->
-										<form role="form" name="contactform" class="form-horizontal" id="contactform" method="post" action="process.php">
-											<div class="row">
-												<div class="col-sm-12 col-md-12">
-													<div class="container">
-														<div class="row">
-															<!-- Input: Name -->
-															<div class="col-md-6 form-group gk-input-text">
-																<input type="text" name="contact_name" class="input-name form-control" placeholder="Nume" required>
-															</div>
-															<!-- Input: Email -->
-															<div class="col-md-6 form-group gk-email pull-right">
-																<input type="email" name="contact_email" class="input-email form-control email" placeholder="Email" required>
-															</div>
-															<!-- Input: Telefon -->
-															<div class="col-md-6 form-group gk-input-text">
-																<input type="text" name="contact_name" class="input-name form-control" placeholder="Phone" required>
-															</div>
+							var map = new google.maps.Map(document.getElementById('map'), {
+									zoom: minZoomLevel,
+									center: new google.maps.LatLng(45.9442858, 25.0094303),
+									mapTypeId: google.maps.MapTypeId.ROADMAP
+							});
 
-															<!-- Input: Company -->
-															<div class="col-md-6 form-group gk-input-text pull-right">
-																<select name="contact_company" class="input-name form-control" name="Companie" required>
-																	<option value="" disabled selected>Tip companie</option>
-																	<option value="Mediu scolar">Mediu scolar</option>
-																	<option value="Utilizator privat">Utilizator privat</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<div class="form-group">
-														<!-- Input: Textarea -->
-														<div class="col-lg-9 col-md-9 gk-textarea-message">
-															<textarea name="contact_message" class="textarea-message form-control" rows="4" cols="25" placeholder="Message" style="color: white; text-transform: none;"></textarea>
-														</div>
-													</div>
-													<!-- Submit Button -->
-													<div class="gk-input-submit submit">
-														<button type="submit" class="btn gk-submit">Send Message</button>
-													</div>
-												</div>
-											</div>
-										</form><!-- Form Ends -->
-									</div><!-- Contact Form Container Ends -->
-								</div><!-- Contact Left Info Ends -->
+							// Bounds for North America
+							var strictBounds = new google.maps.LatLngBounds(
+							new google.maps.LatLng(43.6309,20.1769),
+							new google.maps.LatLng(48.2808,30.1306));
 
-							</div>
-						</div>
-					</div><!-- Contact Section Ends -->
+							// Listen for the dragend event
+							google.maps.event.addListener(map, 'dragend', function () {
+									if (strictBounds.contains(map.getCenter())) return;
+
+									// We're out of bounds - Move the map back within the bounds
+
+									var c = map.getCenter(),
+											x = c.lng(),
+											y = c.lat(),
+											maxX = strictBounds.getNorthEast().lng(),
+											maxY = strictBounds.getNorthEast().lat(),
+											minX = strictBounds.getSouthWest().lng(),
+											minY = strictBounds.getSouthWest().lat();
+
+									if (x < minX) x = minX;
+									if (x > maxX) x = maxX;
+									if (y < minY) y = minY;
+									if (y > maxY) y = maxY;
+
+									map.setCenter(new google.maps.LatLng(y, x));
+							});
+
+							// Limit the zoom level
+							google.maps.event.addListener(map, 'zoom_changed', function () {
+									if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+							});
+						}
+
+												// This is the minimum zoom level that we'll allow
+
+					</script>
+
 
 				</div><!-- Shape 3 Color Ends -->
 			</div>
@@ -534,5 +494,8 @@ Pentru informaţii detaliate despre celelalte programe cofinanţate de Uniunea E
 	<!-- Custom -->
 	<script type="text/javascript" src="{% static 'api/erik_assets/js/custom.js' %}"></script>
 	<!-- Script Ends -->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmDiBFiCv1sRv84-tC9hAfGz8MZj0Ak7I&callback=initMap"
+	type="text/javascript"></script>
+
 </body>
 </html>

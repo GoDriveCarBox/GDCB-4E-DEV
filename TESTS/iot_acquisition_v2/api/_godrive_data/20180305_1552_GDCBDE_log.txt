@@ -1,0 +1,14 @@
+[GDCBDE][2018-03-05 15:51:28] [SQLHLP] INIT [AZURE SQL HELPER v1.3.3]
+[GDCBDE][2018-03-05 15:51:28] [SQLHLP] Using data folder:...ition_v2\api\_godrive_data\db_cache
+[GDCBDE][2018-03-05 15:51:28] [SQLHLP] ODBC Conn: DRIVER={ODBC Driver 13 for SQL Serv...
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] FAILED ODBC Conn!
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] ERROR: ('08001', '[08001] [Microsoft][ODBC Driver 13 for SQL Server]Named Pipes Provider: Could not open a connection to SQL Server [53].  (53) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 13 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 13 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (53)')
+[GDCBDE][2018-03-05 15:52:03] LOGfile: C:\Users\Erik\Dropbox\21. GODR
+[GDCBDE][2018-03-05 15:52:03] Work folder: [C:\Users\Erik\Dropbox\21. GODRIVE_WORK\01_work\TESTS\iot_acquisition_v2\api\_godrive_data]
+[GDCBDE][2018-03-05 15:52:03] INIT DATA EXPLORER v0.1.1
+[GDCBDE][2018-03-05 15:52:03] Setup predictors and raw data repo...
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] Loading file [..ata\db_cache\SELECT_FROM_Codes_.csv] ...
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] Dataset loaded: 0.01MB in 0.0s(0.0m) 134 rows
+[GDCBDE][2018-03-05 15:52:03] Loaded 134 predictors
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] Downloading data [SELECT TOP (1) * FROM [RawData..] ...
+[GDCBDE][2018-03-05 15:52:03] [SQLHLP] ERROR: 'MSSQLHelper' object has no attribute 'conn'
