@@ -161,6 +161,10 @@ class MSSQLHelper:
     str_select = "SELECT TOP (1) * FROM ["+str_table+"]"
     return self.Select(str_select)[0:0]
 
+  def GetIDfromTable(self, id_user, str_table):
+      str_select = "SELECT * FROM ["+str_table+"] WHERE ID =" + str(id_user) + ";"
+      return self.Select(str_select)[0:0]
+
   def CustomSelect(self, str_table, CarID, Code):
     str_select = ("SELECT * FROM [%s] WHERE CarID=%d AND Code='%s'") %\
       (str_table, CarID, Code)
@@ -175,8 +179,10 @@ class MSSQLHelper:
           t1 = tm.time()
           tsec = t1-t0
           tmin = float(tsec) / 60
+          print("EXEC SQL  time: {:.1f}s ({:.2f}min)".format(tsec,tmin))
           self._logger("EXEC SQL  time: {:.1f}s ({:.2f}min)".format(tsec,tmin))
       except Exception as err: #pyodbc.Error as err:
+          print(err)
           self.HandleError(err)
       return
 #Metoda adaugata
@@ -196,7 +202,12 @@ class MSSQLHelper:
 
   def SaveTable(self, df, sTable):
     dfsize = self.GetSize(df) / (1024*1024)
+    print("SaveTable size {}\n".format(dfsize))
+    self._logger("SaveTable size {}\n".format(dfsize))
     try:
+        print("SAVING TABLE [APPEND]({:,} records {:,.2f}MB)...".format(
+                     df.shape[0],
+                     dfsize))
         self._logger("SAVING TABLE [APPEND]({:,} records {:,.2f}MB)...".format(
                      df.shape[0],
                      dfsize))
@@ -208,8 +219,11 @@ class MSSQLHelper:
         t1 = tm.time()
         tsec = t1-t0
         tmin = float(tsec) / 60
+        print("DONE SAVE TABLE. Time = {:.1f}s ({:.2f}min)".format(tsec,tmin))
         self._logger("DONE SAVE TABLE. Time = {:.1f}s ({:.2f}min)".format(tsec,tmin))
     except Exception as err: #pyodbc.Error as err:
+        print("Exception pyodbc error")
+        print(err)
         self.HandleError(err)
     return
 

@@ -219,8 +219,8 @@
 	function next6()	{
 		 document.getElementById('plots').style.display = "block";
 	}
-	function redirectToUser(that)	{
-
+	function redirectToUser(id)	{
+		location.href="/profile?id=" + id;
 	}
 </script>
 <style>
@@ -261,7 +261,7 @@
 									<!-- Shape Down Arrow -->
 									<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
 										<!-- Pricing Grid Row Begins -->
-										<form role="form" name="query" class="form-horizontal" id="query" method="post" action="/explore/">
+
 												<div class="row pricing-grid">
 												<div class="col-xs-12">
 													<!-- Price Table 01 -->
@@ -292,7 +292,7 @@
 																		<ul class="list-unstyled gk-list text-bold color-grey small-text">
 
 																			{% for row in users_list %}
-         																 	<li class="no-border" id="{{ row.0 }}"><option onClick="redirectToUser(this)" value="{{ row.0 }}">{{ row.4 }}</option></li>
+         																 	<li class="no-border" id="{{ row.0 }}"><option onClick="redirectToUser(this.value)" value="{{ row.0 }}">{{ row.7 }}</option></li>
      																	 {% endfor %}
 																		</ul>
 																</select>
@@ -316,32 +316,36 @@
 			    									<p class="gk-form-message"></p>
 			    									<div class="gk-contact-form container animated" data-animation="fadeInUp" data-animation-delay="900">
 			    										<!-- Form Begins -->
-			    										<form role="form" name="profileform" class="form-horizontal" id="contactform" method="post" action="">
+			    										<form role="form" name="create" class="form-horizontal" id="create_user" method="post" action="">
+																{% csrf_token %}
 			    											<div class="row">
 			    												<div class="col-sm-12 col-md-12">
 			    													<div class="container">
 			    														<div class="row">
 																				<!-- Input: Email (User) -->
 																				<div class="col-md-6 form-group gk-input-text">
-																					<label>Email (Username):</label><input type="email" name="create_username" class="input-name form-control" placeholder="{{email}}" required>
+																					<label>Email (Username):</label><input type="email" name="create_username" class="input-name form-control" placeholder="{{ email }}" required>
 																				</div>
 																				<!-- Input: Password -->
 																				<div class="col-md-6 form-group gk-input-text">
-																					<label>Parola:</label><input type="password" name="create_username" class="input-name form-control" placeholder="{{password}}" required>
+																					<label>Parola:</label><input type="password" name="create_pass" class="input-name form-control" placeholder="{{ password }}" required>
 																				</div>
 			    															<!-- Input: Name -->
 			    															<div class="col-md-6 form-group gk-input-text">
-			    																<label>Nume:</label><input type="text" name="create_name" class="input-name form-control" placeholder="{{nume}}" required>
+			    																<label>Nume:</label><input type="text" name="create_name" class="input-name form-control" placeholder="{{ nume }}" required>
 			    															</div>
 			    															<!-- Input: Email -->
 			    															<div class="col-md-6 form-group gk-email pull-right">
-			    																<label>Prenume:</label><input type="text" name="create_prenume" class="input-email form-control email" placeholder="{{prenume}}" required>
+			    																<label>Prenume:</label><input type="text" name="create_prenume" class="input-email form-control email" placeholder="{{ prenume }}" required>
 			    															</div>
 			    															<!-- Input: Telefon -->
 			    															<div class="col-md-6 form-group gk-input-text">
-			    																<label>Telefon:</label><input type="text" name="create_tel" class="input-name form-control" placeholder="{{tel}}" required>
+			    																<label>Telefon:</label><input type="text" name="create_tel" class="input-name form-control" placeholder="{{ tel }}" required>
 			    															</div>
-
+																				<!-- Input: Rol -->
+																				<div class="col-md-6 form-group gk-input-text">
+																					<label>Rol user</label><input type="text" name="create_rol" class="input-name form-control" placeholder="{{ rol }}" required>
+																				</div>
 			    															<!-- Input: Company -->
 			    															<div class="col-md-6 form-group gk-input-text pull-right">
 			                                    <label>Tip cont:</label>
@@ -353,16 +357,20 @@
 			    															</div>
 			    														</div>
 			    													</div>
+																		<!-- Input: Comp_Name -->
+																		<div class="col-md-6 form-group gk-input-text">
+																			<label>Nume companie</label><input type="text" name="create_company_name" class="input-name form-control" placeholder="{{ comp_name }}" required>
+																		</div>
 			    													<div class="form-group">
 			    														<!-- Input: Textarea -->
 			    														<div class="col-lg-9 col-md-9 gk-textarea-message">
-			                                  <label>Descriere:</label>
+			                                  <label>Descriere companie:</label>
 			    															<textarea name="create_company_desc" class="textarea-message form-control" rows="4" cols="45" placeholder="Mesaj" style="color: white; text-transform: none; width: 470px;"></textarea>
 			    														</div>
 			    													</div>
 			    													<!-- Submit Button -->
 			    													<div class="gk-input-submit submit">
-			    														<button type="submit" name="profileform" class="btn gk-submit">Editeaza</button>
+			    														<button type="submit" name="create" class="btn gk-submit">Creeaza utilizatorul</button>
 			    													</div>
 			    												</div>
 			    											</div>

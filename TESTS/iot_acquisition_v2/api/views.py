@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .utils import CarsHelper
 import json
 from django.shortcuts import render, redirect
@@ -8,32 +9,37 @@ from .forms import SearchForm
 import pandas as pd
 import numpy as np
 from math import pi
+from . import urls
 
 logger = logging.getLogger(__name__)
 
-df_rawdata_toshow = None
 df_search = None
-gdcb = GDCBExplorer()
 
 crt_user   = None
 crt_passwd = None
 def map(request):
     return render(request, "api/map.html")
-def index(request):
 
+@csrf_exempt
+def index(request):
   global crt_user
   global crt_passwd
   global err_msg
+
   email_field = 'Adresa de email'
   pass_field = 'Parola'
   if request.method == 'POST':
     crt_user = request.POST['email']
     crt_passwd = request.POST['pwd']
 
-    select_query = 'SELECT * FROM Users WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
+    select_id_query = 'SELECT ID FROM Users WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
                   "'" + str(crt_passwd) + "'" + ";"
-
-    login_df = gdcb.sql_eng.Select(select_query)
+    id_df = urls.gdcb.sql_eng.Select(select_id_query)
+    id_user = id_df['ID'][0]
+    print("========== ID: ==========")
+    print(id_user)
+    select_query = 'SELECT * FROM Users WHERE ID =' + "'" + str(id_user) +"'" + ";"
+    login_df = urls.gdcb.sql_eng.Select(select_query)
     err_msg = ""
     global nume
     nume_df = pd.DataFrame(login_df['Nume'])
@@ -50,6 +56,9 @@ def index(request):
     global rol
     rol_df = login_df['Rol_user']
     rol = rol_df[0]
+    global nume_companie
+    nume_comp_df = login_df['Nume_companie']
+    nume_companie = nume_comp_df[0]
 
     if len(login_df):
 
@@ -70,9 +79,8 @@ def index(request):
 
 
 def api_view(request):
-  global gdcb
   if request.method == 'GET':
-    df = gdcb.df_predictors.loc[gdcb.df_predictors['Enabled'] == 1]
+    df = urls.gdcb.df_predictors.loc[urls.gdcb.df_predictors['Enabled'] == 1]
     return render(request, 'api/doc.html', {'df': df})
 
   if request.method == 'POST':
@@ -88,13 +96,11 @@ def api_view(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 def search_view(request, template='api/rawdata.html', page_template='api/search_page.html'):
-  global df_rawdata_toshow
-  global gdcb
   global df_search
   form = None
   if request.method == 'POST':
-    if df_rawdata_toshow is not None:
-      logger.info("Searching in RawTable...{}".format(list(df_rawdata_toshow.columns)))
+    if urls.df_rawdata_toshow is not None:
+      logger.info("Searching in RawTable...{}".format(list(urls.df_rawdata_toshow.columns)))
     else:
       return HttpResponse("Internal error")
     form = SearchForm(request.POST)
@@ -112,17 +118,17 @@ def search_view(request, template='api/rawdata.html', page_template='api/search_
       CarID_completed = False
       Code_completed = False
       if search_parameters[0] is not None:
-        df_search = df_rawdata_toshow.loc[df_rawdata_toshow['CarID']==search_parameters[0]]
+        df_search = urls.df_rawdata_toshow.loc[urls.df_rawdata_toshow['CarID']==search_parameters[0]]
         CarID_completed = True
       if search_parameters[1] is not '':
         Code_completed = True
         if CarID_completed is True:
           df_search = df_search.loc[df_search['Code']==search_parameters[1]]
         else:
-          df_search = df_rawdata_toshow.loc[df_rawdata_toshow['Code']==search_parameters[1]]
+          df_search = urls.df_rawdata_toshow.loc[urls.df_rawdata_toshow['Code']==search_parameters[1]]
 
       if (not CarID_completed) and (not Code_completed):
-        df_search = pd.DataFrame(columns=list(df_rawdata_toshow.columns))
+        df_search = pd.DataFrame(columns=list(urls.df_rawdata_toshow.columns))
 
   if not df_search is None:
     logger.info("Dataframe containing search results is not none")
@@ -134,6 +140,8 @@ def search_view(request, template='api/rawdata.html', page_template='api/search_
       template = page_template
     return render(request, template, context)
   return HttpResponse("Internal error")
+
+@csrf_exempt
 def admin(request):
     global crt_user
     global crt_passwd
@@ -143,25 +151,60 @@ def admin(request):
     global descriere
     global df_users
     global rol
-    df_users =  gdcb.sql_eng.ReadTable(gdcb.config_data["USERS_TABLE"], caching=False)
+    global df_users_insert
+    df_users =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["USERS_TABLE"], caching=False)
+    #df_users_insert =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["USERS_TABLE"], caching=False)
+    df_users_insert =  urls.gdcb.sql_eng.GetEmptyTable(urls.gdcb.config_data["USERS_TABLE"])
+    del df_users_insert['ID']
 
-    context = {
-        'username': crt_user,
-        'passwd': crt_passwd,
-        'nume': nume,
-        'prenume': prenume,
-        'tel': tel,
-        'descriere': descriere,
-        'rol': rol,
-        'users_list': [tuple(x) for x in df_users.to_records(index=False)],
-    }
+
+
 
     if request.method == 'GET':
         if crt_user == "" or crt_user == None:
             return redirect("/")
         else:
+            print ("DATAFRAME before append:\n")
+            print (df_users_insert)
+            context = {
+                'username': crt_user,
+                'passwd': crt_passwd,
+                'nume': nume,
+                'prenume': prenume,
+                'tel': tel,
+                'descriere': descriere,
+                'rol': rol,
+                'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+            }
             return render(request, "api/admin.html", context)
-
+    else:
+        if crt_user == "" or crt_user == None:
+            return redirect("/")
+        else:
+            context = {
+                'username': crt_user,
+                'passwd': crt_passwd,
+                'nume': nume,
+                'prenume': prenume,
+                'tel': tel,
+                'descriere': descriere,
+                'rol': rol,
+                'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+            }
+            row = [request.POST['create_name'], request.POST['create_prenume'], request.POST['create_tel'], request.POST['create_username'], request.POST['create_pass'], request.POST['create_company_type'], request.POST['create_company_name'], request.POST['create_company_desc'], request.POST['create_rol'], 1]
+            row_serie = pd.Series(row, index=['Nume', 'Prenume',  'Telefon', 'Adresa_email', 'Parola', 'Tip_cont', 'Nume_companie', 'Descriere_companie', 'Rol_user', 'Flota_detinuta'])
+            #df_users_insert.append(row_serie, ignore_index=True)
+            print ("DATAFRAME after append:\n")
+            df_users_insert = df_users_insert.append(row_serie, ignore_index=True)
+            print (df_users_insert.head())
+            #sql_insert_query = "INSERT INTO Users  ('Nume', 'Prenume', 'Telefon', 'Adresa_email', 'Parola', 'Tip_cont', 'Nume_companie', 'Descriere_companie', 'Rol_user', 'Flota_detinuta') values ('" +  nume_creat + "','" + prenume_creat + "','" + telefon_creat + "','" + user_creat + "','" + pass_creat + "','" + comp_type_creat + "','" + comp_name_creat + "','" + comp_desc_creat + "','" + rol_user_creat + "'" + ");"
+            #print ("SQL:" + sql_insert_query)
+            #urls.gdcb.sql_eng.ExecInsert(sql_insert_query)
+            print("BEFORE ReadTable\n")
+            print()
+            urls.gdcb.sql_eng.SaveTable(df_users_insert, urls.gdcb.config_data["USERS_TABLE"])
+            return render(request, "api/admin.html", context)
+@csrf_exempt
 def profile(request):
     global crt_user
     global crt_passwd
@@ -169,7 +212,15 @@ def profile(request):
     global prenume
     global tel
     global descriere
-    context = {
+    global nume_companie
+    global df_users
+    global df_users_update
+    df_users_update =  urls.gdcb.sql_eng.GetEmptyTable(urls.gdcb.config_data["USERS_TABLE"])
+    id_user = request.GET.get('id')
+
+    del df_users_update['ID']
+    df_users =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["USERS_TABLE"], caching=False)
+    '''context = {
         'username': crt_user,
         'passwd': crt_passwd,
         'nume': nume,
@@ -177,21 +228,94 @@ def profile(request):
         'tel': tel,
         'rol': rol,
         'descriere': descriere,
-    }
+        'nume_companie': nume_companie,
+        'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+    }'''
     if request.method == 'GET':
         if crt_user == "" or crt_user == None:
             return redirect("/")
+        elif (request.GET.get('id') is not None):
+                    id_user = str(request.GET.get('id'))
+                    print("========== ID profil vizitat: ==========")
+                    print(id_user)
+                    select_query = 'SELECT * FROM Users WHERE ID =' + "'" + id_user +"'" + ";"
+                    login_df = urls.gdcb.sql_eng.Select(select_query)
+                    err_msg = ""
+
+                    nume_df = pd.DataFrame(login_df['Nume'])
+                    nume = nume_df['Nume'][0]
+
+                    prenume_df = login_df['Prenume']
+                    prenume = prenume_df[0]
+
+                    tel_df = login_df['Telefon']
+                    tel = tel_df[0]
+
+                    descriere_df = login_df['Descriere_companie']
+                    descriere = descriere_df[0]
+
+                    rol_df = login_df['Rol_user']
+                    rol = rol_df[0]
+
+                    nume_comp_df = login_df['Nume_companie']
+                    nume_companie = nume_comp_df[0]
+
+                    context = {
+                        'username': crt_user,
+                        'passwd': crt_passwd,
+                        'nume': nume,
+                        'prenume': prenume,
+                        'tel': tel,
+                        'rol': rol,
+                        'descriere': descriere,
+                        'nume_companie': nume_companie,
+                        'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+                    }
+                    return render(request, "api/profile.html", context)
         else:
-            return render(request, "api/profile.html", context)
+            return render(request, "api/profile.html")
 
     if request.method == 'POST':
+        if request.POST.get("admin_profileform") is not None:
+            nume = request.POST['profile_name']
+            prenume = request.POST['profile_prenume']
+            tel = request.POST['profile_tel']
+            company_type = request.POST['profile_company_type']
+            company_name = request.POST['profile_company_name']
+            descriere = request.POST['profile_company_desc']
+            user_rol = request.POST['profile_rol_user']
+            id_user = request.POST.get('id')
+            row = [nume, prenume, tel, request.POST['create_username'], request.POST['create_pass'], company_type, company_name, company_desc, user_rol, 1]
+            row_serie = pd.Series(row, index=['Nume', 'Prenume',  'Telefon', 'Adresa_email', 'Parola', 'Tip_cont', 'Nume_companie', 'Descriere_companie', 'Rol_user', 'Flota_detinuta'])
+
+            update_query = 'UPDATE Users SET Nume =' + nume + 'Prenume = ' + prenume + 'Telefon =' + tel + 'Tip_cont =' + company_type + 'Descriere_companie =' + descriere + ' WHERE ID=' + "'" + str(id_user) + "'" + ";"
+            context = {
+                'username': crt_user,
+                'passwd': crt_passwd,
+                'nume': nume,
+                'prenume': prenume,
+                'tel': tel,
+                'rol': rol,
+                'descriere': descriere,
+                'nume_companie': nume_companie,
+                'users_list': [tuple(x) for x in df_users.to_records(index=False)],
+            }
+            print("Test")
+            urls.gdcb.sql_eng.ExecUpdate(update_query)
+            if crt_user == "" or crt_user == None:
+                return redirect("/")
+            else:
+                return render(request, "api/profile.html", context)
+
         if request.POST.get("profileform") is not None:
                 nume = request.POST['profile_name']
                 prenume = request.POST['profile_prenume']
                 tel = request.POST['profile_tel']
                 company_type = request.POST['profile_company_type']
                 descriere = request.POST['profile_company_desc']
-                update_query = 'UPDATE Users SET Nume =' + nume + 'Prenume = ' + prenume + 'Telefon =' + tel + 'Tip_cont =' + company_type + 'Descriere_companie =' + descriere + ' WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
+                rol = 'companie'
+                nume_companie = 'SRL'
+                update_query = 'UPDATE Users SET Nume =' + "'" + nume + "'" + ', Prenume = ' + "'" + prenume + "'" + ', Telefon =' + "'" + tel + "'" + ', Tip_cont =' + "'" + company_type + "'" + ', Descriere_companie =' + "'" + descriere + "'" + ' WHERE Adresa_email =' + "'" + str(crt_user) + "'" + ' AND Parola =' + \
                               "'" + str(crt_passwd) + "'" + ";"
                 context = {
                     'username': crt_user,
@@ -201,17 +325,17 @@ def profile(request):
                     'tel': tel,
                     'rol': rol,
                     'descriere': descriere,
+                    'nume_companie': nume_companie,
+                    'users_list': [tuple(x) for x in df_users.to_records(index=False)],
                 }
-                print("Test")
-                gdcb.sql_eng.ExecUpdate(update_query)
+                print(update_query)
+                urls.gdcb.sql_eng.ExecInsert(update_query)
                 if crt_user == "" or crt_user == None:
                     return redirect("/")
                 else:
                     return render(request, "api/profile.html", context)
 
 def test_view(request):
-  global df_rawdata_toshow
-  global gdcb
   global crt_user
   global crt_passwd
   from datetime import timedelta
@@ -219,7 +343,7 @@ def test_view(request):
 
   print(crt_user, crt_passwd)
 
-  rawdata_view(request)
+  #rawdata_view(request)
 
   df_test = None
 
@@ -231,18 +355,18 @@ def test_view(request):
     matrix = np.ones((10, 100)) * (-1) # must create dynamic array at least (better update with Ajax)
 
 
-    for _, row in df_carsxaccounts.iterrows():
+    for _, row in urls.df_carsxaccounts.iterrows():
       car = row['Masina']
       flota = row['FlotaID']
 
       matrix[flota, car] = car
 
     matrix = pd.DataFrame(matrix)
-
+    df_accounts =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["ACCOUNTS_TABLE"], caching=False)
     context = {
       'cars_list': [tuple(x) for x in matrix.to_records(index=False)],
       'account_list': [tuple(x) for x in df_accounts.to_records(index=False)],
-      'codes_list': [tuple(x) for x in df_codes.to_records(index=False)],
+      'codes_list': [tuple(x) for x in urls.df_codes.to_records(index=False)],
       'username': crt_user,
       'passwd': crt_passwd,
       'nume': nume,
@@ -279,14 +403,16 @@ def test_view(request):
     start_date = datetime.strptime(start_date, '%Y-%m-%d')
     end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
-    df_test = df_rawdata_toshow.loc[df_rawdata_toshow['CarID']==int(CarID)]
+    Code = Code[-2:]
+
+    df_test = urls.df_rawdata_toshow.loc[urls.df_rawdata_toshow['CarID']==int(CarID)]
     df_test = df_test.loc[df_test['Code']==Code]
     df_test = df_test[df_test['TimeStamp'] >= start_date]
     df_test = df_test[df_test['TimeStamp'] <= end_date + timedelta(days=1)]
     df_test.index = df_test['TimeStamp']
 
     if len(df_test) == 0:
-      return HttpResponse("Wrong query")
+      return HttpResponse("Nu s-au gasit date conform selectiilor.")
 
     if str.lower(group_by) != "fara":
       df_grouped = df_test[['TimeStamp', 'ViewVal']].resample(group_by).mean().fillna(0)
@@ -530,33 +656,28 @@ def create_histogram(source_df,  plt_title, y_title = "Valoare medie"):
   save(plot)
 
 def rawdata_view(request, template='api/rawdata.html', page_template='api/rawdata_page.html'):
-  global df_rawdata_toshow
   global df_accounts
   global df_cars
   global df_codes
-  global df_carsxcodes
-  global df_carsxaccounts
-  global gdcb
 
   logger.info("Accessing rawdata view")
   page = request.GET.get('page', False)
   if page is False:
-    logger.info("Updating df_rawdata_toshow")
-    gdcb = GDCBExplorer()
-    df_rawdata_toshow = gdcb.sql_eng.ReadTable(gdcb.config_data["RAWDATA_TABLE"],\
+    logger.info("Updating urls.df_rawdata_toshow")
+    df_rawdata_toshow = urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["RAWDATA_TABLE"],\
                                                caching=False)
-    df_accounts =  gdcb.sql_eng.ReadTable(gdcb.config_data["ACCOUNTS_TABLE"], caching=False)
-    df_cars =  gdcb.sql_eng.ReadTable(gdcb.config_data["CARS_TABLE"], caching=False)
-    df_codes =  gdcb.sql_eng.ReadTable(gdcb.config_data["PREDICTOR_TABLE"], caching=False)
-    df_carsxcodes = gdcb.sql_eng.ReadTable(gdcb.config_data["CARSXCODESV2_TABLE"], caching=False)
+    df_accounts =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["ACCOUNTS_TABLE"], caching=False)
+    df_cars =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["CARS_TABLE"], caching=False)
+    df_codes =  urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["PREDICTOR_TABLE"], caching=False)
+    df_carsxcodes = urls.gdcb.sql_eng.ReadTable(urls.gdcb.config_data["CARSXCODESV2_TABLE"], caching=False)
     df_carsxaccounts = gdcb.df_carsxaccounts
 
 
-  if not df_rawdata_toshow is None:
-    gdcb.AssociateCodeDescriptionColumns(df_rawdata_toshow)
-    gdcb._logger("Rawdata copy: {}".format(list(df_rawdata_toshow.columns)))
+  if not urls.df_rawdata_toshow is None:
+    urls.gdcb.AssociateCodeDescriptionColumns(urls.df_rawdata_toshow)
+    urls.gdcb._logger("Rawdata copy: {}".format(list(urls.df_rawdata_toshow.columns)))
     context = {
-      'entry_list': [tuple(x) for x in df_rawdata_toshow.to_records(index=False)],
+      'entry_list': [tuple(x) for x in urls.df_rawdata_toshow.to_records(index=False)],
       'page_template': page_template,
     }
     if request.is_ajax():

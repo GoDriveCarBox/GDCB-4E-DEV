@@ -6,7 +6,25 @@
   "username" : "carbox@carbox",
   "password" : "GDCBnpsf0517",
   "driver" : "{ODBC Driver 13 for SQL Server}",
-	
-  "PREDICTORS" :     [1012,1005,1004],
-  "PREDICTOR_NAMES" :["RPM","CoolantTemp","EngineLoad"]
+  
+  
+  "EPSILON" : 1e-8, 
+  
+
+  
+  "PREDICTED_FAULTS" 		: {
+	"001" : {
+		"NAME" : "Engine Coolant Problem",
+		"DETECTORS": {"CoolantTemp" : 1}
+		}
+		},"TEMP": {
+	"002" : {
+		"NAME" : "Bad driving",
+		"DETECTORS": {"RPM" : 1}
+		},
+	"003" : {
+		"NAME" : "Other engine issues",
+		"DETECTORS": {"RPM" : 0.5, "EngineLoad" : 0.5}
+		}
+  }
 }

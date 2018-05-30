@@ -1,15 +1,58 @@
 import paho.mqtt.client as mqtt
 from mqtt_utils import LoadLogger
 import os
+import sys
 import pandas as pd
 import datetime
 from time import time as tm
 from threading import Timer
 from gdcb_explore import GDCBExplorer
 
+'''
+Modified:
+  2018-05-22  Added repeating Timer Class
+              Short idle message + buffer status report
+              Added buffer time to live  
+              Added stats display on buffer
+  2018-05-23  Added reset idle message
+              Added session upload counter
+'''
+
+__VERSION__ = "0.98.2"
+
+class RepeatingTimer(object):
+
+    def __init__(self, interval, f, *args, **kwargs):
+        self.interval = interval
+        self.f = f
+        self.args = args
+        self.kwargs = kwargs
+
+        self.timer = None
+
+    def callback(self):
+        self.f(*self.args, **self.kwargs)
+        self.start()
+
+    def cancel(self):
+        self.timer.cancel()
+
+    def start(self):
+        self.timer = Timer(self.interval, self.callback)
+        self.timer.start()
+
 class GMqttClient():
 
   def __init__(self, name = "GMqtt1", config_file = "config.txt", debug = False, debug_level = 1):
+    """
+    name - object name
+    config_file - JSON config file
+    debug - used for debug purpose in oder that client to not consume 
+            all messages when run in test mode
+    debug_level - verbosity level, if greater than 1 individual logging for 
+                  each received message 
+    """
+    self.__version__ = __VERSION__
     self.init_cache_timestamp = 0
     self.init_gdcb_timestamp = 0
     self.name = name
@@ -37,23 +80,39 @@ class GMqttClient():
     self.global_start_time = tm()
     self.flag_connected = False
     self.flag_in_log = False
+    self.flag_display_buffstats = False
 
     self.last_msg_time = 0
+    self.idle_time = tm() - self.last_msg_time
+    self.session_upload_counter = 0
+    
+    self.log("Starting MQTTClient ver.{}".format(self.__version__))
+    self.log("Debug level: {}".format(debug_level))
 
     self._init_cache()
-    self._display_status_service_run()
+    self._setup_status_timer()
+    return;
+
+
+  def _setup_status_timer(self):
+    self.alive_timer = RepeatingTimer(self.check_time * 60, 
+      self._display_status_service_run)
+    self.alive_timer.start()
 
 
   def _display_status_service_run(self):
-
-    self.alive_timer = Timer(self.check_time * 60, self._display_status_service_run)
-    self.alive_timer.start()
-
     seconds_alive = tm() - self.global_start_time
-    idle_time = tm() - self.last_msg_time
-    if self.flag_connected and (idle_time > self.check_time * 60):
-      self.log("Listening on topic {}, server {} for {:.3f} hours (idle_time: {})".
-        format(self.topic_tree[:-2], self.server, seconds_alive / 3600, idle_time))
+    self.idle_time = tm() - self.last_msg_time
+    if self.flag_connected and (self.idle_time > self.check_time * 60):
+      self.log("AliveThread: topic {}, svr {}, {:.3f} hrs (idle {:.3f} min) [{}/{}]".
+        format(self.topic_tree[:-2], self.server, seconds_alive / 3600, 
+          self.idle_time / 60, self.df_crt_batch.shape[0], self.batch_size))
+      if self.idle_time >= self.buffer_ttl * 60 and self.df_crt_batch.shape[0] > 0:
+        self.log("Forcing dispatch for {} msgs".format(self.df_crt_batch.shape[0]))
+        self._display_buffer_stats(self.df_crt_batch)
+        self._dispatch_and_clean()
+    return
+
 
   def _get_config_data(self):
     self.base_folder  = self.config_data['BASE_FOLDER']
@@ -73,14 +132,27 @@ class GMqttClient():
     self.check_time       = float(self.config_data['MINUTES_CHECK_INTERVAL'])
     self.num_log_msgs     = int(self.config_data['NR_LOG_MESSAGES']) 
     self.dlevel_print_all = int(self.config_data['DEGUG_LEVEL_PRINT_ALL'])
+    self.buffer_ttl = int(self.config_data['BUFFER_TTL']) 
     
     self.valid_topics = [self.topic_token]
     return
 
+  def _display_buffer_stats(self, df):
+
+    srr = df[['VIN', 'Code']].groupby(['VIN', 'Code']).size()
+    unique_VINs = df['VIN'].unique()
+    self.log(" Display {} msgs for {} VINs".format(df.shape[0], 
+      unique_VINs.shape[0]))
+    for i, s in enumerate(srr):
+      self.log("  VIN/Code: {}/{}: {} msgs".format(srr.index[i][0], 
+        srr.index[i][1], s))
+    return
+
+
   def _init_gdcb_explorer(self):
     t_sec = tm()
     if (self.init_gdcb_timestamp == 0) or ((t_sec - self.init_gdcb_timestamp) >= self.h_init_gdcb * 3600):
-      self.gdcb = GDCBExplorer(self.logger)
+      self.gdcb = GDCBExplorer(self.logger, load_data = False)
       self.init_gdcb_timestamp = tm()
     return
 
@@ -146,6 +218,8 @@ class GMqttClient():
       self.log("Received {} messages (last received topic {}) in {:.2f}s".
         format(self.minibatch_ct, msg.topic, self.end_recv_minibatch - self.start_recv_minibatch))
       self.minibatch_ct = 0
+      self.flag_display_buffstats = True
+
 
     if self.debug_level >= self.dlevel_print_all:
       self.log("Received mesage: Topic=[{}]; Payload=[{}]; Tstmp=[{}]; Index=[{}]".format(
@@ -171,9 +245,23 @@ class GMqttClient():
     """
     return
 
+
+  def _dispatch_and_clean(self):
+    _success = self._dispatch(self.df_crt_batch)
+
+    if _success:
+      self.df_crt_batch = self.df_crt_batch[0:0]
+      self.minibatch_ct = 0
+      
+    return
+
+
   def register_message(self, topic_data, payload_data):
     topic_values = [data for data in topic_data.split('/') if data != ""]
+    self.log("{}".format(topic_values))
     if topic_values[0] in self.valid_topics:
+      if self.idle_time > self.check_time * 60:
+        self.log("Message received. Idle time will reset.")
       msg_dict = {}
       for i in range(1,len(topic_values)):
         msg_dict[self.path_tokens[i-1]] = topic_values[i]
@@ -184,14 +272,21 @@ class GMqttClient():
   
       self.df_crt_batch = self.df_crt_batch.append(pd.DataFrame(msg_dict, index=[0]), 
         ignore_index = True)
+
+      if self.flag_display_buffstats:
+        self._display_buffer_stats(self.df_crt_batch.tail(1000))
+        self.flag_display_buffstats = False
       
       if self.df_crt_batch.shape[0] >= self.batch_size:
-        self._dispatch(self.df_crt_batch)
-        self.df_crt_batch = self.df_crt_batch[0:0]
+        self._display_buffer_stats(self.df_crt_batch)
+        self._dispatch_and_clean()
+    else:
+        self.log("Received invalid topic {}!".format(topic_values[0]))
     return
 
-  def _dispatch(self, df, save_to_disk=True):
 
+  def _dispatch(self, df, save_to_disk=True):
+  
     df_to_dispatch = df.copy()
 
     filename  = datetime.datetime.now().strftime('%d-%m-%Y_%H-%M-%S')
@@ -207,20 +302,24 @@ class GMqttClient():
     
     self._init_gdcb_explorer()    
     self._init_cache()
-    """
-    if save_to_disk:
-      df_to_dispatch.to_csv(filename, float_format='{:f}'.format, encoding='utf-8',
-                            date_format='%d-%m-%Y %H-%M-%S', index=False)
-    """
-    self.write_to_database(df_to_dispatch)
-    df_to_dispatch = df_to_dispatch[0:0]
-    return
 
-  def write_to_database(self, df):
+    _success = self.write_to_database(df_to_dispatch, save_to_disk)
+    if _success:
+      self.session_upload_counter += df_to_dispatch.shape[0]
+      df_to_dispatch = df_to_dispatch[0:0]
+      self.log("Cleaning cache. So far uploaded {} msgs this sess".
+        format(self.session_upload_counter))
+    else:
+      self.log("Cache preserved!")
+
+    return _success
+
+  def write_to_database(self, df, save_to_disk):
     df_joined = pd.merge(df, self.df_cache, how='left', on=['VIN', 'Code'])
     df_joined.drop('VIN', axis=1, inplace=True)
-    self.gdcb.DumpDfToRawData(df_joined)
-    return
+    df_joined = df_joined.fillna(value={'CarID':-1})
+    _success = self.gdcb.DumpDfToRawData(df_joined, save_to_disk = save_to_disk)
+    return _success
     
 
   def setup_connection(self):
@@ -237,7 +336,13 @@ class GMqttClient():
 
 if __name__ == "__main__":
 
-  gdc = GMqttClient()
+  if (len(sys.argv) < 2):
+    vlevel = 1
+  else:
+    vlevel = int(sys.argv[1])
+
+  vebosity_level = max(1, vlevel)
+  gdc = GMqttClient(debug_level = vlevel)
   #gdc.DispatchSavedBatch('batches/29-01-2018_21-50-56_100batch.csv')
   #gdc.write_to_database(gdc.df_loaded_batch)
   gdc.setup_connection()

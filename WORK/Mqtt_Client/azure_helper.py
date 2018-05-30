@@ -183,6 +183,7 @@ class MSSQLHelper:
 
   def SaveTable(self, df, sTable, log_sql=False): ### see if we can save sql text...
     dfsize = self.GetSize(df) / (1024*1024)
+    _success = True
     try:
         self._logger("SAVING TABLE [APPEND]({:,} records {:,.2f}MB)...".format(
                      df.shape[0],
@@ -198,7 +199,9 @@ class MSSQLHelper:
         self._logger("DONE SAVE TABLE. Time = {:.1f}s ({:.2f}min)".format(tsec,tmin))
     except Exception as err: #pyodbc.Error as err:
         self.HandleError(err)
-    return
+        _success = False
+
+    return _success
 
   def OverwriteTable(self, df, sTable):
     dfsize = self.GetSize(df) / (1024*1024)

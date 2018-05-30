@@ -132,7 +132,8 @@ class GDCBExplorer:
    - downloads data for model training and prediction
    - acts as a general data broker
   """
-  def __init__(self, logger):
+  def __init__(self, logger, load_data = True):
+    self.load_data = load_data
     self.FULL_DEBUG = False
     pd.options.display.float_format = '{:,.3f}'.format
     pd.set_option('expand_frame_repr', False)
@@ -241,36 +242,39 @@ class GDCBExplorer:
     self.raw_valid_columns = [self.raw_cari_field, self.raw_code_field, self.raw_sval_field, self.raw_nval_field,\
                               self.raw_vwnv_field, self.raw_vwsv_field, self.raw_time_field, self.raw_devsn_field]
 
-    self.df_predictors = self.sql_eng.ReadTable(s_pred_table)
-    if not self.df_predictors is None:
-      self.df_predictors.fillna(0,inplace = True)
-      self._logger("Loaded {} predictors".format(self.df_predictors.shape[0]))
+    if self.load_data:
+      self.df_predictors = self.sql_eng.ReadTable(s_pred_table)
+      if not self.df_predictors is None:
+        self.df_predictors.fillna(0,inplace = True)
+        self._logger("Loaded {} predictors".format(self.df_predictors.shape[0]))
 
-    self.df_rawdata = self.sql_eng.GetEmptyTable(s_rawd_table)
-    if not self.df_rawdata is None:
-      self.df_rawdata.drop(self.config_data["RAW_IGNR_FIELD"],
-                           axis=1, inplace=True)
-      self._logger("RawData: {}".format(list(self.df_rawdata.columns)))
+      self.df_rawdata = self.sql_eng.GetEmptyTable(s_rawd_table)
+      if not self.df_rawdata is None:
+        self.df_rawdata.drop(self.config_data["RAW_IGNR_FIELD"],
+                             axis=1, inplace=True)
+        self._logger("RawData: {}".format(list(self.df_rawdata.columns)))
 
-    self.df_cars = self.sql_eng.ReadTable(s_cars_table)
-    if not self.df_cars is None:
-      self._logger("Loaded {} cars".format(self.df_cars.shape[0]))
+      self.df_cars = self.sql_eng.ReadTable(s_cars_table)
+      if not self.df_cars is None:
+        self._logger("Loaded {} cars".format(self.df_cars.shape[0]))
 
-    self.df_rawdata_toshow = self.sql_eng.ReadTable(s_rawd_table)
-    if not self.df_rawdata_toshow is None:
-      self._logger("Rawdata copy: {}".format(list(self.df_rawdata_toshow.columns)))
+      self.df_rawdata_toshow = self.sql_eng.ReadTable(s_rawd_table)
+      if not self.df_rawdata_toshow is None:
+        self._logger("Rawdata copy: {}".format(list(self.df_rawdata_toshow.columns)))
 
-    self.df_accounts = self.sql_eng.ReadTable(s_accounts_table)
-    if not self.df_accounts is None:
-      self._logger("Loaded {} accounts".format(self.df_accounts.shape[0]))
+      self.df_accounts = self.sql_eng.ReadTable(s_accounts_table)
+      if not self.df_accounts is None:
+        self._logger("Loaded {} accounts".format(self.df_accounts.shape[0]))
 
 
-    str_select_carsxaccounts = "SELECT c.ID Masina, f.Name Flota, f.ID FlotaID\
-                                from Cars c left join Accounts f \
-                                on c.AccountID=f.ID order by Flota"
-    self.df_carsxaccounts = self.sql_eng.Select(str_select_carsxaccounts)
-    if not self.df_carsxaccounts is None:
-      self._logger("CarsxAccounts copy: {}".format(list(self.df_carsxaccounts.columns)))
+      str_select_carsxaccounts = "SELECT c.ID Masina, f.Name Flota, f.ID FlotaID\
+                                  from Cars c left join Accounts f \
+                                  on c.AccountID=f.ID order by Flota"
+      self.df_carsxaccounts = self.sql_eng.Select(str_select_carsxaccounts)
+      if not self.df_carsxaccounts is None:
+        self._logger("CarsxAccounts copy: {}".format(list(self.df_carsxaccounts.columns)))
+    else:
+      self._logger("Skipping GDCBExplore data downloads.")
 
     self._logger("Done data preparation.")
     return
@@ -333,7 +337,7 @@ class GDCBExplorer:
       return float('NaN')
 
 
-  def DumpDfToRawData(self, df, save_to_disk=True):
+  def DumpDfToRawData(self, df, save_to_disk = True):
     """
     ID	 CarID	CodeID	StrValue	Value	ViewVal	ViewStr	TimeStamp	 DeviceSN
     1	    2 	  1049	  0x5710	22288	22288.2941435941	22288.29 km	2017-06-01 16:17:58.873	NULL
@@ -353,9 +357,10 @@ class GDCBExplorer:
   
     assert not (self.sql_eng.engine is None)
     self._logger("Saving raw data ...")
-    self.sql_eng.SaveTable(df_copy, self.config_data["RAWDATA_TABLE"])
-    self._logger("Done saving raw data.")
-    return
+    _success = self.sql_eng.SaveTable(df_copy, self.config_data["RAWDATA_TABLE"])
+    self._logger("Done saving raw data with {}".format("success." if _success 
+      else "failure!"))
+    return _success
     
 
   def AssociateCodeDescriptionColumns(self, df):

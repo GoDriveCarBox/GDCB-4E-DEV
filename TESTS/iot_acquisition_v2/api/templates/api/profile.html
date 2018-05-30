@@ -157,6 +157,7 @@
 		<!-- Layout Begins -->
 
 		<section id="shapes" class="shape-section">
+			{{ id }}
 <script type="text/javascript">
 
   function clear_cars() {
@@ -249,6 +250,88 @@
   			color: #F1C40F;
   }
 </style>
+{% if request.GET.id and 'admin' in rol %}
+	{% for row in users_list %}
+		{% if row.0 == request.GET.id|add:0 %}
+				<!-- Contact Section Begins ===== ADMIN MODE -->
+				<div id="contact-us" class="contact-section section-padding index-big relative">
+					<div class="container">
+						<div class="row">
+							<!-- Contact Left Info Begins -->
+							<div class="col-md-6 animated" data-animation="fadeInLeft" data-animation-delay="500">
+								<!-- Title -->
+								<h2 class="section-title color-grey"><span class="text-extrabold">Profilul tau</span></h2>
+								<!-- Shape Down Arrow -->
+								<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
+								<!-- Description -->
+
+
+								<h3 class="section-msg text-center color-grey">
+									<form role="form" name="admin_profileform" class="form-horizontal" id="contactform" method="post" action=""> <button type="submit" name="profileform" class="ghost-button-full-color" data-toggle="dropdown" value="edit" style="color: #F1C40F;">Editeaza informatiile</button></form></h3>
+								<!-- Contact Form Container Begins -->
+								<p class="gk-form-message"></p>
+								<div class="gk-contact-form container animated" data-animation="fadeInUp" data-animation-delay="900">
+									<!-- Form Begins -->
+									<form role="form" name="admin_profileform" class="form-horizontal" id="contactform" method="post" action="">
+										<div class="row">
+											<div class="col-sm-12 col-md-12">
+												<div class="container">
+													<div class="row">
+														<!-- Input: Name -->
+														<div class="col-md-6 form-group gk-input-text">
+															<label>Nume:</label><input type="text" name="profile_name" class="input-name form-control" placeholder="{{nume}}" required>
+														</div>
+														<!-- Input: Email -->
+														<div class="col-md-6 form-group gk-email pull-right">
+															<label>Prenume:</label><input type="text" name="profile_prenume" class="input-email form-control email" placeholder="{{prenume}}" required>
+														</div>
+														<!-- Input: Telefon -->
+														<div class="col-md-6 form-group gk-input-text">
+															<label>Telefon:</label><input type="text" name="profile_tel" class="input-name form-control" placeholder="{{tel}}" required>
+														</div>
+														<!-- Input: Companie -->
+														<div class="col-md-6 form-group gk-input-text">
+															<label>Nume companie:</label><input type="text" name="profile_name" class="input-name form-control" placeholder="{{nume}}" required>
+														</div>
+														<!-- Input: Companie descriere -->
+														<div class="col-md-6 form-group gk-input-text">
+															<label>Descriere companie:</label><input type="text" name="profile_name" class="input-name form-control" placeholder="{{nume}}" required>
+														</div>
+														<!-- Input: Company -->
+														<div class="col-md-6 form-group gk-input-text pull-right">
+															<label>Tip cont:</label>
+															<select name="profile_company_type" class="input-name form-control" name="Companie"  style="color: black;" required>
+																<option value="companie" selected>Companie</option>
+																<option value="Mediu scolar">Mediu scolar</option>
+																<option value="Utilizator privat">Utilizator privat</option>
+															</select>
+														</div>
+														
+													</div>
+												</div>
+												<div class="form-group">
+													<!-- Input: Textarea -->
+													<div class="col-lg-9 col-md-9 gk-textarea-message">
+														<label>Descriere:</label>
+														<textarea name="profile_company_desc" class="textarea-message form-control" rows="4" cols="45" placeholder="Mesaj" style="color: white; text-transform: none; width: 470px;"></textarea>
+													</div>
+												</div>
+												<!-- Submit Button -->
+												<div class="gk-input-submit submit">
+													<button type="submit" name="profileform" class="btn gk-submit">Editeaza</button>
+												</div>
+											</div>
+										</div>
+									</form><!-- Form Ends -->
+								</div><!-- Contact Form Container Ends -->
+							</div><!-- Contact Left Info Ends -->
+
+						</div>
+					</div>
+				</div><!-- Contact Section Ends -->
+		{% endif %}`
+	{% endfor %}
+{% else %}
               <!-- Contact Section Begins -->
     					<div id="contact-us" class="contact-section section-padding index-big relative">
     						<div class="container">
@@ -260,6 +343,8 @@
     									<!-- Shape Down Arrow -->
     									<p class="text-center color-grey"><i class="flaticon flaticon-yield gk-triangle-medium"></i></p>
     									<!-- Description -->
+
+
     									<h3 class="section-msg text-center color-grey"> <form role="form" name="profileform" class="form-horizontal" id="contactform" method="post" action="process.php"> <button type="submit" name="profileform" class="ghost-button-full-color" data-toggle="dropdown" value="edit" style="color: #F1C40F;">Editeaza informatiile</button></form></h3>
     									<!-- Contact Form Container Begins -->
     									<p class="gk-form-message"></p>
@@ -314,55 +399,7 @@
     							</div>
     						</div>
     					</div><!-- Contact Section Ends -->
-
-					<script>
-						var map;
-						function initMap() {
-							var minZoomLevel = 6;
-
-							var map = new google.maps.Map(document.getElementById('map'), {
-									zoom: minZoomLevel,
-									center: new google.maps.LatLng(45.9442858, 25.0094303),
-									mapTypeId: google.maps.MapTypeId.ROADMAP
-							});
-
-							// Bounds for North America
-							var strictBounds = new google.maps.LatLngBounds(
-							new google.maps.LatLng(43.6309,20.1769),
-							new google.maps.LatLng(48.2808,30.1306));
-
-							// Listen for the dragend event
-							google.maps.event.addListener(map, 'dragend', function () {
-									if (strictBounds.contains(map.getCenter())) return;
-
-									// We're out of bounds - Move the map back within the bounds
-
-									var c = map.getCenter(),
-											x = c.lng(),
-											y = c.lat(),
-											maxX = strictBounds.getNorthEast().lng(),
-											maxY = strictBounds.getNorthEast().lat(),
-											minX = strictBounds.getSouthWest().lng(),
-											minY = strictBounds.getSouthWest().lat();
-
-									if (x < minX) x = minX;
-									if (x > maxX) x = maxX;
-									if (y < minY) y = minY;
-									if (y > maxY) y = maxY;
-
-									map.setCenter(new google.maps.LatLng(y, x));
-							});
-
-							// Limit the zoom level
-							google.maps.event.addListener(map, 'zoom_changed', function () {
-									if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
-							});
-						}
-
-												// This is the minimum zoom level that we'll allow
-
-					</script>
-
+							{% endif %}
 		</section>
         <!-- Layout Ends -->
 
