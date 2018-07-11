@@ -1,0 +1,11 @@
+{
+ "BASE_FOLDER" : "GoogleDrive",
+ "APP_FOLDER"  : "_godrive_data/mqtt_publisher",
+ "SERVER"      : "mqtt-gdcb.westeurope.cloudapp.azure.com",
+ "PORT"	       : "1883",
+ "KEEP_ALIVE"  : "60",
+ "TOPIC"       : "Car_fleet",
+ "TEST_VIN"    : "11111111111111111",
+ "TEST_DEV"    : "38a28c5df327",
+ "TEST_CODE"   : "010D"
+}

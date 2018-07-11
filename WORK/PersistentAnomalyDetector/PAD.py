@@ -18,8 +18,8 @@ Created on Thu Nov  9 04:58:32 2017
 TODO:
   - testare pe date car 57  
   
-  
 """
+
 import numpy as np
 import pandas as pd
 import os
@@ -129,6 +129,9 @@ class PersistentAnomalyDetector:
     self.model_name = model_name
     self.name = "{}_{}".format(self.model_name,self.entity_name)
     
+    self.threshold = 0.5
+    
+    
     return
   
   
@@ -222,21 +225,25 @@ class PersistentAnomalyDetector:
     
     return _result
 
-  def save_anomaly_event(self, code, proba):
+  def save_anomaly_event(self, tmstp, code, proba, car_details):
     """
     this method saves the event based on key (CodeID) and aproba (Proba)
     in the PADEvents table using sql_eng object and constructed 
     SQL INSERT STATEMENT
     """
-    tstmp = dt.now()
+    code_idx = np.where(np.array(car_details['PREDICTOR_NAMES']) == code)[0][0]
+    
+    tstmp = tmstp
     s_time = tstmp.strftime('%Y-%m-%d %H:%M:%S')    
     s_car = '{}'.format(self.entity_name)
-    s_code = '{}'.format(code)
+    s_code_name = '{}'.format(code)
+    s_code_id = '{}'.format(car_details['PREDICTORS'][code_idx])
     s_prob = '{:.4f}'.format(proba)
-    sql = "INSERT INTO dbo.PADEvents ([EventTime], [CarID], [CodeID], [Proba]) VALUES "
-    sql += "('"+s_time+"',"+s_car+","+s_code+","+s_prob+")"
+    sql = "INSERT INTO dbo.PADEvents ([EventTime], [CarID], [CodeID], [Proba], [Descr]) VALUES "
+    sql += "('"+s_time+"',"+s_car+","+s_code_id+","+s_prob+",'"+s_code_name+"')"
     self.P('Saving car {} event with {}% for {}'.format(
-        s_car, s_prob, s_code))
+        s_car, s_prob, s_code_name))
+    self.P(sql)
     _res = self.sql_eng.ExecInsert(sql)
     if _res:
       self.P('Done saving event.')
@@ -245,15 +252,15 @@ class PersistentAnomalyDetector:
     return
     
 
-  def analize_obs(self, obs, save_anomaly=True):
+  def analize_obs(self, obs_tmstp, obs, car_details, save_anomaly = True):
     #weight = 0.5
     self._reset_faults()    
     res = self._analize_data(obs)
     self._add_fault(res)
     aproba = res['TOTAL_APROBA']
-    if  aproba >= 0.5:
-      if aproba > 1.0:
-        aproba = 1.0
+    if  aproba >= self.threshold:
+      aproba = min(aproba, 1.0)
+      
       self.P("Anomaly detected with {:.1f}% probability:".format(aproba*100))
       for key in self.features.keys():
         
@@ -269,10 +276,11 @@ class PersistentAnomalyDetector:
           self.P("  {:10s} has FAULT {:.2f}% with value {:.2f}".format(
               key, aproba*100, val))
           if save_anomaly:
-            self.save_anomaly_event(code=key, proba=aproba)
+            self.save_anomaly_event(tmstp = obs_tmstp, code=key, proba=aproba, 
+                                    car_details = car_details)
       _faults, _text = self._get_faults()
       self.P("  PREDICTED FUTURE FAILURES: {}".format(_text))
-    return res, val
+    return aproba
 
     
   

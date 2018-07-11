@@ -81,6 +81,8 @@ class PADManager:
     self.clfs = []
     self.DEBUG = DEBUG
     self._get_entities_config()
+    self.events_df = self.sql_eng.GetEmptyTable("PADEvents")
+    
     return
   
   
@@ -131,9 +133,9 @@ class PADManager:
       
       batch_end_tstamp = dt.now()
       s_batch_end = batch_end_tstamp.strftime('%Y-%m-%d %H:%M:%S')    
-      self._predict_iter(clf, s_batch_start, s_batch_end)
-          
+      self._predict_iter(clf, s_batch_start, s_batch_end)        
     return
+  
   
   def _predict_iter(self, clf, s_batch_start, s_batch_end):
       #clf.logger.VerboseLog('Waiting {}s in order to generate new data in the database...'.format(wait_time))
@@ -152,9 +154,18 @@ class PADManager:
         df_test['Good'] = clf.predict_anomaly(df_test)      
         df_anomaly = df_test[df_test['Good'] == False]
         
+        for index, row in df_anomaly.iterrows():
+          clf.analize_obs(index, row, self.cars[clf.entity_name], 
+                          save_anomaly = True)
+          break
+          
+        '''
         for i in range(df_anomaly.shape[0]):
-          res = clf.analize_obs(df_anomaly.iloc[i])
-        
+          clf.analize_obs(df_anomaly.iloc[i], self.cars[clf.entity_name], 
+                          save_anomaly = True)
+          break
+        '''
+          
         if not self.DEBUG:
           for index, row in df_anomaly.iterrows():
             clf.logger.VerboseLog("{_anomaly_prob:.1f}% DETECTED AN ANOMALY for the car with ID = {_car_id}."\
